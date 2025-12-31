@@ -1,0 +1,61 @@
+\section*{Integração de Riemann como limite de partições pontilhadas}
+
+\begin{definition}[Definição 17]
+Dizemos que uma função $f: [a, b] \to \mathbb{R}$ limitada é Riemann integrável se 
+\[ \overline{\int_{a}^{b}} f(x)dx = \underline{\int_{a}^{b}} f(x)dx. \] 
+Denotamos este valor por $\int_{a}^{b} f(x)dx$. 
+\end{definition}
+
+\begin{teoremabox}{Teorema 19}
+Uma função $f: [a, b] \to \mathbb{R}$ limitada é Riemann integrável se e somente se para todo $\epsilon > 0$ existe uma partição $P$ de $[a, b]$ tal que $S(f, P) - s(f, P) < \epsilon$. 
+\end{teoremabox}
+
+\begin{proof}
+$(\Rightarrow)$ Suponha que $f$ seja Riemann integrável. Seja $I = \int_{a}^{b} f(x)dx = \overline{\int_{a}^{b}} f(x)dx = \underline{\int_{a}^{b}} f(x)dx$. 
+Por propriedades de ínfimo e supremo, dado $\epsilon > 0$, existe uma partição $P$ de $[a, b]$ tal que $I - s(f, P) < \epsilon/2$ e existe uma partição $Q$ de $[a, b]$ tal que $S(f, Q) - I < \epsilon/2$. 
+
+Logo, somando as duas desigualdades, temos que $S(f, Q) - s(f, P) < \epsilon$.  Considerando a partição $T = P \cup Q$ que refina ambas, temos $s(f, P) \le s(f, T)$ e $S(f, T) \le S(f, Q)$, e logo $S(f, T) - s(f, T) < \epsilon$. 
+
+$(\Leftarrow)$ Para todo $\epsilon > 0$, exista $P$ partição de $[a, b]$ tal que $S(f, P) - s(f, P) < \epsilon$. 
+Como $\overline{\int_{a}^{b}} f(x)dx \le S(f, P)$ e $-\underline{\int_{a}^{b}} f(x)dx \le -s(f, P)$, somando as duas desigualdades obtemos: 
+\[ \overline{\int_{a}^{b}} f(x)dx - \underline{\int_{a}^{b}} f(x)dx \le S(f, P) - s(f, P) < \epsilon. \] 
+
+Porém, do Teorema 15 sabemos que essa diferença é não negativa, e logo para todo $\epsilon > 0$: 
+\[ 0 \le \overline{\int_{a}^{b}} f(x)dx - \underline{\int_{a}^{b}} f(x)dx < \epsilon. \] 
+Isto implica que $\overline{\int_{a}^{b}} f(x)dx = \underline{\int_{a}^{b}} f(x)dx$, portanto $f$ é Riemann integrável. 
+\end{proof}
+
+\begin{teoremabox}{Teorema 19B (Caso Geral)}
+Sejam $A, B \subseteq \mathbb{R}$ não vazios tais que para todo $x \in A$ e $y \in B$, $x \le y$. Então:
+\[ \sup A = \inf B \iff \text{para todo } \epsilon > 0, \text{ existe } x \in A, y \in B \text{ com } y - x < \epsilon. \] 
+\end{teoremabox}
+
+\newpage
+
+\section*{Integral como Limite de Somas e Norma da Partição}
+
+Dada uma partição $P$, definimos a norma de $P$ pela medida do maior subintervalo.  Sendo $P = \{t_0, t_1, \dots, t_n\}$ uma partição de $[a, b]$, temos:
+\[ |P| := \max_{1 \le i \le n} (t_i - t_{i-1}). \] 
+
+\begin{teoremabox}{Teorema 25}
+A integral superior é o limite das somas superiores quando a norma da partição tende a 0:
+\[ \overline{\int_{a}^{b}} f(x)dx = \lim_{|P| \to 0} S(f, P). \] 
+Isso significa que, $\forall \epsilon > 0$, existe $\delta > 0$ tal que para toda partição $P$ com $|P| < \delta$, vale $S(f, P) < \overline{\int_{a}^{b}} f(x)dx + \epsilon$. 
+Analogamente, $\underline{\int_{a}^{b}} f(x)dx = \lim_{|P| \to 0} s(f, P)$. 
+\end{teoremabox}
+
+\begin{proof}
+Vamos supor que $M := \sup_{[a, b]} f > 0$.  Para o caso $M \le 0$, basta considerar a aplicação do caso anterior na função $g(x) = f(x) + 2|M| + 1$, que satisfaz $\sup g > 0$. 
+
+Dado $\epsilon > 0$, fixe uma partição $P_\epsilon = \{t_0, \dots, t_m\}$ tal que $S(f, P_\epsilon) < \overline{\int_{a}^{b}} f(x)dx + \frac{\epsilon}{2}$.  Seja $P = \{\lambda_0, \dots, \lambda_k\}$ uma partição de $[a, b]$ com $|P| < \delta$. 
+Dividimos os subintervalos de $P$ em dois conjuntos: $S_j$, o conjunto de subintervalos contidos em $[t_{j-1}, t_j]$, e $I$, o conjunto de subintervalos que cruzam as fronteiras de $P_\epsilon$. 
+
+Observemos que existem no máximo $m-1$ intervalos em $I$ que cruzam pontos internos de $P_\epsilon$.  Logo, para $M_j = \sup_{[t_{j-1}, t_j]} f$:
+\[ S(f, P) = \sum_{i=1}^{k} \sup_{[\lambda_{i-1}, \lambda_i]} f \cdot (\lambda_i - \lambda_{i-1}) \]
+\[ \le \sum_{j=1}^{m} M_j \sum_{i \in S_j} (\lambda_i - \lambda_{i-1}) + |I| \cdot M \cdot \delta < S(f, P_\epsilon) + m M \delta. \] 
+
+Escolhendo $\delta = \frac{\epsilon}{2mM}$, temos que $S(f, P) \le S(f, P_\epsilon) + \frac{\epsilon}{2} < \overline{\int_{a}^{b}} f(x)dx + \epsilon$. 
+
+Para a soma inferior, usamos o fato de que $S(-f, P) = -s(f, P)$ e $\overline{\int} (-f) = -\underline{\int} f$.  Como $\lim_{|P| \to 0} S(-f, P) = \overline{\int_{a}^{b}} (-f)(x)dx$, segue que $\lim_{|P| \to 0} s(f, P) = \underline{\int_{a}^{b}} f(x)dx$. 
+\end{proof}
+

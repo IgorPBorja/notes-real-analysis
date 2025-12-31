@@ -1,0 +1,238 @@
+\begin{definition}
+Dada $X \subseteq \mathbb{R}$, $X'$ (conjunto de pts de acumulação) é definido por
+$$X' = \{x \in \mathbb{R} \mid x \text{ é ponto de acumulação de } X\}$$.
+
+Definimos que $x$ é ponto de acumulação se e só se $\forall \epsilon > 0, B_\epsilon(x) \cap X \setminus \{x\} \neq \emptyset$.
+\end{definition}
+
+\begin{lemma}
+Dado $x \in X'$, existe uma sequência $(x_n)$ dois a dois disjuntos em $X \setminus \{x\}$ tal que $\lim x_n = x$.
+\end{lemma}
+
+\begin{proof}
+Tome $x_n \in B_{1/n}(x) \cap X \setminus \{x\}$, que existe pois $x \in X'$. Então $\lim x_n = x$. Como $x_n \in X \setminus \{x\}$, temos $x_n \in X$ e $x_n \neq x$ para todo $n \in \mathbb{N}$.
+\end{proof}
+
+\begin{definition}
+Dada $f: X \to \mathbb{R}$ e $a \in X \cap X'$, dizemos que $f$ é diferenciável em $a$ se existe o limite:
+$$L = \lim_{x \to a} \frac{f(x) - f(a)}{x - a}$$
+Isso é igual a, pondo $h = x - a$:
+$$\lim_{h \to 0} \frac{f(a+h) - f(a)}{h}$$
+\end{definition}
+
+\begin{lemma}
+Se $f$ é diferenciável em $a$, então definindo $r(h) := f(a+h) - [f(a) + f'(a)h]$, temos que $r(h)$ tende a $0$ mais rápido que $h$, ou seja:
+$$\lim_{h \to 0} \frac{r(h)}{h} = 0$$
+Onde $r(h)$ representa o resto da aproximação pela função afim $f(a) + f'(a)h$.
+\end{lemma}
+
+\begin{tcolorbox}[colback=white, colframe=black]
+\begin{theorem}
+Se $f$ é diferenciável em $a$, então $f$ é contínua em $a$.
+\end{theorem}
+\end{tcolorbox}
+
+\begin{proof}
+Observe que $f(a+h) = f(a) + f'(a)h + r(h)$ implica que $\lim_{h \to 0} f(a+h) = f(a)$. Logo $f$ é contínua em $a$.
+\end{proof}
+
+\begin{remark}
+Note que a derivada é única pela unicidade do limite. O resto representa o erro absoluto da aproximação pela função afim para um dado $h$.
+\end{remark}
+
+\begin{tcolorbox}[colback=white, colframe=black]
+\begin{theorem}[Regra da Cadeia]
+Sejam $f: X \to Y$ e $g: Y \to \mathbb{R}$ com $f(X) \subseteq Y$. Seja $a \in X \cap X'$ e $b = f(a)$. Se existem $f'(a)$ e $g'(b)$, então $g \circ f$ é diferenciável em $a$ e:
+$$(g \circ f)'(a) = g'(b) \cdot f'(a) = g'(f(a)) \cdot f'(a)$$
+\end{theorem}
+\end{tcolorbox}
+
+\begin{remark}
+Você pode tentar argumentar que:
+$$\lim_{h \to 0} \frac{(g \circ f)(a+h) - (g \circ f)(a)}{h} = \lim_{h \to 0} \frac{g(f(a+h)) - g(f(a))}{f(a+h) - f(a)} \cdot \frac{f(a+h) - f(a)}{h}$$
+Porém, nada garante que $f(a+h) - f(a) \neq 0$, o que quebra o argumento!
+\end{remark}
+
+\begin{proof}
+Pelo Lema 2, temos $f(a+h) = f(a) + f'(a)h + \rho(h)h$ com $\lim_{h \to 0} \rho(h) = 0$ e $g(b+k) = g(b) + g'(b)k + \sigma(k)k$ com $\lim_{k \to 0} \sigma(k) = 0$. Logo:
+$$(g \circ f)(a+h) = g(f(a) + f'(a)h + \rho(h)h)$$
+$$= g(b) + g'(b)[f'(a)h + \rho(h)h] + \sigma(f'(a)h + \rho(h)h)[f'(a)h + \rho(h)h]$$
+$$\frac{(g \circ f)(a+h) - (g \circ f)(a)}{h} = g'(b)[f'(a) + \rho(h)] + \sigma(f'(a)h + \rho(h)h)[f'(a) + \rho(h)]$$
+Observe que pela continuidade de $\sigma$, $\lim_{h \to 0} \sigma(f'(a)h + \rho(h)h) = \sigma(0) = 0$. Logo:
+$$(g \circ f)'(a) = \lim_{h \to 0} \frac{(g \circ f)(a+h) - (g \circ f)(a)}{h} = g'(b)f'(a) = g'(f(a)) \cdot f'(a)$$
+Note que definimos $\rho(h) := \frac{r_f(h)}{h}$ se $h \neq 0$ e $\sigma(k) := \begin{cases} \frac{r_g(k)}{k} & k \neq 0 \\ 0 & k = 0 \end{cases}$ em que $r$ é o resto da derivada de $g$ relativa a $b$.
+\end{proof}
+
+\begin{tcolorbox}[colback=white, colframe=black]
+\begin{theorem}
+Seja $f: X \to Y$ função com inversa $g = f^{-1}$, com $f$ diferenciável em $a \in X \cap X'$ e $g$ contínua em $b = f(a)$. Então $g$ é diferenciável em $b$ se e somente se $f'(a) \neq 0$, caso no qual $g'(b) = \frac{1}{f'(a)}$.
+\end{theorem}
+\end{tcolorbox}
+
+\begin{proof}
+$(\Rightarrow)$ (Se $g$ é diferenciável $\Rightarrow f'(a) \neq 0$): Pela regra da cadeia, como $g$ é diferenciável em $f(a)$, temos $\operatorname{id} = (g \circ f)(x) \implies 1 = (g \circ f)'(a) = g'(b)f'(a) \Rightarrow f'(a) \neq 0$.
+
+$(\Leftarrow)$ ($f'(a) \neq 0 \Rightarrow g$ é diferenciável em $b$): Temos que:
+$$\lim_{y \to b} \frac{g(y) - g(b)}{y - b} = \lim_{y \to f(a)} \frac{g(y) - a}{y - f(a)}$$
+Fazendo $y = f(x)$, pela continuidade de $g$, quando $y \to b$, temos $x = g(y) \to g(b) = a$. Assim:
+$$\lim_{y \to b} \frac{g(y) - a}{y - f(a)} = \lim_{x \to a} \frac{x - a}{f(x) - f(a)} = \frac{1}{\lim_{x \to a} \frac{f(x) - f(a)}{x - a}} = \frac{1}{f'(a)}$$
+A penúltima igualdade vale pela continuidade de $g$. Logo $g'(b)$ existe e $g'(b) = \frac{1}{f'(a)}$.
+\end{proof}
+
+\begin{definition}
+Dada um intervalo $I \subseteq \mathbb{R}$, definimos:
+$$C^0(I) = \{f: I \to \mathbb{R}, f \text{ é contínua}\}$$
+$$C^{m+1}(I) = \{f: I \to \mathbb{R}, f \text{ é diferenciável e } f' \in C^m(I)\}$$
+$$C^{\infty}(I) = \{f: I \to \mathbb{R}, f \text{ é diferenciável e } f' \in C^{\infty}(I)\}$$
+Obtemos que $C^{\infty}(I) \subsetneq \dots \subsetneq C^{m+1}(I) \subsetneq C^m(I) \subsetneq \dots \subsetneq C^0(I)$.
+\end{definition}
+
+\subsection*{Derivadas Laterais}
+
+\begin{definition}
+Dada uma função $f: X \to \mathbb{R}$ e $a \in X \cap X'_+$, definimos a derivada pela direita por:
+$$f'_+(a) = \lim_{x \to a^+} \frac{f(x) - f(a)}{x - a}$$
+Se $a \in X \cap X'_-$, definimos a derivada pela esquerda por:
+$$f'_-(a) = \lim_{x \to a^-} \frac{f(x) - f(a)}{x - a}$$
+\end{definition}
+
+\begin{example}
+$f(x) = \begin{cases} 1 & x > 0 \\ 0 & x \leq 0 \end{cases}$. $f'(0)$ não existe, pois o limite lateral diverge para $+\infty$.
+\end{example}
+
+\begin{exercise}
+Dada $f: X \to \mathbb{R}$ e $a \in X \cap X'_+ \cap X'_-$, mostre que $f$ possui derivada em $a$ se e somente se existem ambas as derivadas laterais em $a$, e elas são iguais ($f'_+(a) = f'_-(a)$). Nesse caso, a derivada é igual às derivadas laterais.
+\end{exercise}
+
+\begin{example}
+$f(x) = \begin{cases} x^2 \sin(1/x) + x/2 & x \neq 0 \\ 0 & x = 0 \end{cases}$. $f$ é diferenciável em todo ponto, porém $f'$ é descontínua em $0$. Assim, embora $f'(0) = 1/2 > 0$, não podemos afirmar que $f$ é crescente em uma vizinhança de $0$.
+\end{example}
+
+\begin{tcolorbox}[colback=white, colframe=black]
+\begin{theorem}
+Seja $f: X \to \mathbb{R}$ tal que existe $f'_+(a)$, em que $a \in X \cap X'_+$. Se $f'_+(a) > 0$, então existe $\delta > 0$ tal que se $x \in (a, a+\delta)$, então $f(a) < f(x)$. O mesmo vale para a derivada pela esquerda $f'_-(a) > 0$. Observe que isso não significa que $f$ é crescente localmente, em $(a, a + \delta)$.
+\end{theorem}
+\end{tcolorbox}
+
+\begin{proof}
+Seja $L = \lim_{x \to a^+} \frac{f(x) - f(a)}{x - a} > 0$. Tome $\epsilon > 0$ tal que $L - \epsilon > 0$ (por exemplo $\epsilon = L/2$). Logo existe $\delta > 0$ tal que $x \in (a, a+\delta)$ implica que $\frac{f(x) - f(a)}{x - a} \in (L - \epsilon, L + \epsilon)$. Em particular, $\frac{f(x) - f(a)}{x - a} > L - \epsilon > 0$. Como $x > a$, então segue que $f(x) - f(a) > 0$, ou seja, $f(x) > f(a)$.
+\end{proof}
+
+\begin{corollary}
+Se $f$ é derivável em $a$ e $f'(a) > 0$, então existe $\delta > 0$ tal que se $x \in (a - \delta, a)$, então $f(x) < f(a)$ e se $y \in (a, a + \delta)$, então $f(a) < f(y)$. Se $f'(a) < 0$, o comportamento é análogo com sinal trocado.
+\end{corollary}
+
+\begin{proof}
+Como $f'(a) > 0$, então tanto $f'_+(a) > 0$ quanto $f'_-(a) > 0$, o que pelo Teorema 5 significa que existem $\delta_1, \delta_2 > 0$ tais que $x \in (a, a+\delta_1) \implies f(a) < f(x)$ e $x \in (a-\delta_2, a) \implies f(x) < f(a)$. Tomamos então $\delta = \min(\delta_1, \delta_2)$.
+\end{proof}
+
+Em resumo, para $\delta$ suficientemente pequena:
+\begin{itemize}
+    \item $f'(a) > 0 \Rightarrow f(a - \delta) < f(a)$
+    \item $f'(a) > 0 \Rightarrow f(a) < f(a + \delta)$
+    \item $f'(a) < 0 \Rightarrow f(a - \delta) > f(a)$
+    \item $f'(a) < 0 \Rightarrow f(a) > f(a + \delta)$
+\end{itemize}
+
+\begin{tcolorbox}[colback=white, colframe=black]
+\begin{theorem}
+Se $f: X \to \mathbb{R}$ é derivável em $a \in int(X)$ (ponto interior) e $a$ é ponto de mínimo local ou de máximo local, então $f'(a) = 0$.
+\end{theorem}
+\end{tcolorbox}
+
+\begin{proof}
+Como a derivada existe, temos 3 casos: $f'(a) > 0$, $f'(a) < 0$ ou $f'(a) = 0$. Observe que:
+\begin{enumerate}
+    \item Se $f'(a) > 0$, então pelo Teorema 5 existe $\delta > 0$ tal que $(a-\delta, a) \subseteq X$ e $x \in (a-\delta, a) \implies f(x) < f(a)$ e $x \in (a, a+\delta) \implies f(a) < f(x)$. Logo $a$ não é nem mínimo nem máximo local.
+    \item Se $f'(a) < 0$, então pelo Teorema 5 existe $\delta > 0$ tal que $(a-\delta, a) \subseteq X$ e $x \in (a-\delta, a) \implies f(x) > f(a)$ e $x \in (a, a+\delta) \implies f(a) > f(x)$. Logo $a$ não é mínimo nem máximo local.
+\end{enumerate}
+    Por tanto, necessariamente $f'(a) = 0$.
+\end{proof}
+
+\begin{remark}
+Note que a recíproca {\bf não é verdadeira}: podemos ter $f'(a) = 0$ em pontos que não são min/max locais, como por exemplo pontos de sela. Exemplo: $a = 0$ em $f(x) = x^3$. Além disso, pode ocorrer de $a$ ser mínimo/máximo local e a derivada não existir, como em $a = 0$ em $f(x) = |x|$.
+\end{remark}
+
+\section*{Funções deriváveis em um intervalo}
+
+Para as provas que seguem, relembre do seguinte (de Weierstrass):
+\begin{tcolorbox}[colback=white, colframe=black]
+\begin{theorem}[Weierstrass]
+Se $f: K \to \mathbb{R}$ é contínua em $K \subset \mathbb{R}$ um compacto, então $f$ é limitada e atinge seu mínimo e máximo global. Ou seja, existem $x_1, x_2 \in K$ com $f(x_1) \leq f(x) \leq f(x_2)$.
+\end{theorem}
+\end{tcolorbox}
+
+\begin{proof}
+Mostremos que a imagem de um compacto por uma função contínua é um compacto. De fato, seja $f(K) \subseteq \bigcup_{\lambda \in L} A_{\lambda}$ uma cobertura de $f(K)$ por abertos. Como é uma cobertura da imagem, para todo $x \in K$ podemos escolher um índice $\omega(x) \in L$ tal que $f(x) \in A_{\omega(x)}$, criando assim uma função de "seleção" dos índices.
+
+Como $f$ é contínua, se $f(x) \in A_{\omega(x)}$, existe um intervalo (ou bola) $I_{\omega(x)}$ contendo $x$ tal que $f(I_{\omega(x)} \cap K) \subseteq A_{\omega(x)}$. Assim, a coleção $\{I_{\omega(x)}\}_{x \in K}$ forma uma cobertura aberta de $K$. Como $K$ é compacto, temos uma subcobertura finita $\{I_{\omega(x_i)}\}_{i=1}^{n}$, de forma que:
+\[ K \subseteq \bigcup_{i=1}^{n} I_{\omega(x_i)} \implies f(K) = f\left(\bigcup_{i=1}^{n} (I_{\omega(x_i)} \cap K)\right) = \bigcup_{i=1}^{n} f(I_{\omega(x_i)} \cap K) \subseteq \bigcup_{i=1}^{n} A_{\omega(x_i)} \]
+
+Dessa forma, obtemos uma subcobertura finita de $f(K)$ a partir de uma cobertura por abertos arbitrária $(A_{\lambda})_{\lambda \in L}$. Logo, $f(K)$ é um conjunto compacto.
+
+Sendo $f(K) \subset \mathbb{R}$ um compacto, ele é fechado e limitado. Como $f(K)$ é limitado, existem o supremo $M = \sup f(K)$ e o ínfimo $m = \inf f(K)$. Pelo fato de $f(K)$ ser fechado, temos que $\sup f(K) \in f(K)$ e $\inf f(K) \in f(K)$. Portanto, existem $x_1, x_2 \in K$ tais que $f(x_1) = \inf f(K)$ e $f(x_2) = \sup f(K)$, o que prova que a função atinge seu mínimo e máximo globais.
+\end{proof}
+
+\begin{tcolorbox}[colback=white, colframe=black]
+\begin{theorem}[Darboux - TVI para derivadas]
+Seja $f: [a, b] \to \mathbb{R}$ derivável em todo $[a, b]$. Se $f'(a) < d < f'(b)$, então existe $c \in (a, b)$ tal que $f'(c) = d$.
+\end{theorem}
+\end{tcolorbox}
+
+\begin{proof}
+Se $d = 0$, então pelo Teorema de Weierstrass $f$ atinge seu mínimo (ou máximo) em algum ponto $x^* \in [a, b]$. Porém, como $f'(a) < 0$, existe $\delta_1$ tal que $x \in (a, a+\delta_1) \implies f(x) < f(a)$. Como $f'(b) > 0$, existe $\delta_2$ tal que $x \in (b-\delta_2, b) \implies f(x) < f(b)$. Logo $a$ e $b$ não são mínimos locais, portanto $x^* \in (a, b)$. Pelo Teorema 6, $f'(x^*) = 0 = d$. Se $d \neq 0$, aplique o caso anterior para $g(x) = f(x) - dx$.
+\end{proof}
+
+\begin{tcolorbox}[colback=white, colframe=black]
+\begin{theorem}[Rolle]
+Seja $f: [a, b] \to \mathbb{R}$ contínua em $[a, b]$ e derivável em $(a, b)$ tal que $f(a) = f(b)$. Então existe $c \in (a, b)$ tal que $f'(c) = 0$.
+\end{theorem}
+\end{tcolorbox}
+
+\begin{proof}
+Seja $y = f(a) = f(b)$. Se $f$ for constante no intervalo, então $f' = 0$ em $(a, b)$. Caso contrário, como $f$ é contínua, pelo Teorema de Weierstrass ela atinge um máximo $M$ e um mínimo $m$. Pelo menos um desses valores deve ser diferente de $y$, ocorrendo em algum $c \in (a, b)$. Pelo Teorema 6, $f'(c) = 0$.
+\end{proof}
+
+\begin{tcolorbox}[colback=white, colframe=black]
+\begin{theorem}[TVM - Teorema do Valor Médio de Lagrange]
+Se $f: [a, b] \to \mathbb{R}$ é contínua em $[a, b]$ e derivável em $(a, b)$, então existe $c \in (a, b)$ tal que:
+$$f'(c) = \frac{f(b) - f(a)}{b - a}$$
+\end{theorem}
+\end{tcolorbox}
+
+\begin{proof}
+Considere $g(x) = f(x) - \frac{f(b) - f(a)}{b - a}x$. $g$ é contínua em $[a, b]$, derivável em $(a, b)$ e $g(a) = g(b) = \frac{f(a)b - f(b)a}{b - a}$. Pelo Teorema de Rolle, existe $c \in (a, b)$ tal que $g'(c) = 0$. Como $g'(x) = f'(x) - \frac{f(b) - f(a)}{b - a}$, então $f'(c) = \frac{f(b) - f(a)}{b - a}$.
+\end{proof}
+
+\begin{corollary}
+Se uma função possui derivada nula em todos os pontos de um intervalo, então $f$ é constante nesse intervalo.
+\end{corollary}
+
+\begin{proof}
+Tome $x, y \in [a, b]$ com $x < y$. Pelo TVM, existe $c \in (x, y)$ tal que $\frac{f(y) - f(x)}{y - x} = f'(c)$. Como $f'(c) = 0$, temos $f(y) - f(x) = 0 \Rightarrow f(x) = f(y)$. Logo $f$ é constante.
+\end{proof}
+
+\begin{corollary}
+Se $f, g: (a, b) \to \mathbb{R}$ são deriváveis e $f' = g'$ em todo ponto, então existe uma constante $c$ tal que $g(x) = f(x) + c$.
+\end{corollary}
+
+\begin{tcolorbox}[colback=white, colframe=black]
+\begin{theorem}[Monotonicidade e Inversa]
+Seja $f: I \to \mathbb{R}$ derivável em um intervalo $I$.
+\begin{enumerate}
+    \item $f'(x) \geq 0$ para todo $x \in I$ se e só se $f$ é não-decrescente (e analogamente $f'(x) \leq 0$ para $f$ não-crescente).
+    \item Se $f'(x) > 0$ para todo $x \in I$, então $f$ é estritamente crescente e possui inversa $g: f(I) \to \mathbb{R}$ contínua e derivável no intervalo $f(I)$.
+\end{enumerate}
+\end{theorem}
+\end{tcolorbox}
+
+\begin{proof}
+1) $(\Rightarrow)$ Pelo TVM, para $x < y$, existe $z \in (x, y)$ tal que $\frac{f(y) - f(x)}{y - x} = f'(z) \geq 0$, logo $f(x) \leq f(y)$.
+$(\Leftarrow)$ Da definição de derivada, se $f$ é não-decrescente, $\frac{f(x) - f(a)}{x - a} \geq 0$. Tomando o limite, $f'(a) \geq 0$.
+
+2) Se $f'(x) > 0$, $f$ é estritamente crescente e injetiva. Se $f(x) = f(y)$ para $x \neq y$, pelo Teorema de Rolle existiria $z \in (x, y)$ tal que $f'(z) = 0$, uma contradição. A existência e diferenciabilidade da inversa segue do Teorema 3.
+\end{proof}
+
+\begin{remark}
+Note que a recíproca do item 2 não vale: uma função pode ser estritamente crescente com derivada que se anula em alguns pontos (que não são de extremo). Exemplo: $f(x) = x^3$ em $x = 0$.
+\end{remark}

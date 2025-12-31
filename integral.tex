@@ -1,0 +1,447 @@
+% Configuração das caixas conforme solicitado
+\newtcolorbox{teoremabox}[1]{colback=white, colframe=black, fonttitle=\bfseries, title=#1, arc=0mm}
+
+\section*{Integral de Riemann}
+
+\begin{teoremabox}{Definição 10}
+Dizemos que uma partição $Q$ é um refinamento de uma partição $P$ de um intervalo $[a,b]$ se $P \subseteq Q$. (Lembre-se da definição de partição na Definição 7).
+\end{teoremabox}
+
+\begin{teoremabox}{Teorema 14}
+Suponha que $[a, b]$ é um intervalo e $P$ uma partição tal que $Q$ refina $P$ (ou seja, $P \subseteq Q$), e $f: [a,b] \rightarrow \mathbb{R}$ é uma função limitada. Então:
+\begin{itemize}
+    \item A soma inferior não diminui: $s(f;P) \le s(f;Q)$
+    \item A soma superior não aumenta: $S(f;P) \ge S(f;Q)$
+\end{itemize}
+\end{teoremabox}
+
+\begin{proof}
+Provamos por indução no tamanho da diferença $k = |Q \setminus P|$. O caso base em que $|Q \setminus P| = 0$ é trivial, pois ele implica que $Q = P$. Supondo então válida para todo par $\tilde{P} \subseteq \tilde{Q}$ de partições com $|\tilde{Q} \setminus \tilde{P}| = k-1$.
+
+Tome um $\lambda \in Q \setminus P$ qualquer. Então $R = Q \setminus \{\lambda\}$ é um refinamento de $P$, porém com $|R \setminus P| = k-1$, portanto por hipótese indutiva $s(f,P) \le s(f,R)$ e $S(f,P) \ge S(f,R)$.
+
+Seja $R = \{t_0, t_1, \dots, t_m\}$ com $a = t_0 < t_1 < \dots < t_m = b$ e suponha sem perda de generalidade que $t_i < \lambda < t_{i+1}$ com $0 \le i < m$. (De fato, $\lambda$ não pode ser uma das extremidades, pois estas são comuns a todas as partições). 
+
+Então, pondo $m' = \inf_{x \in [t_i, \lambda]} f(x)$ e $m'' = \inf_{x \in [\lambda, t_{i+1}]} f(x)$, temos:
+\[ s(f;Q) = \sum_{j=0}^{i-1} m_j (t_{j+1} - t_j) + m'(\lambda - t_i) + m'' (t_{i+1} - \lambda) + \sum_{j=i+1}^{m-1} m_j (t_{j+1} - t_j) \]
+
+Observe que, como $[t_i, \lambda] \subseteq [t_i, t_{i+1}]$ e $[\lambda, t_{i+1}] \subseteq [t_i, t_{i+1}]$, temos:
+\[ m' := \inf_{x \in [t_i, \lambda]} f(x) \ge \inf_{x \in [t_i, t_{i+1}]} f(x) =: m_i \]
+\[ m'' := \inf_{x \in [\lambda, t_{i+1}]} f(x) \ge \inf_{x \in [t_i, t_{i+1}]} f(x) =: m_i \]
+
+Assim, 
+\[ m'(\lambda - t_i) + m''(t_{i+1} - \lambda) \ge m_i (\lambda - t_i) + m_i (t_{i+1} - \lambda) = m_i (t_{i+1} - t_i) \]
+Logo, aplicando na expressão anterior, $s(f;Q) \ge s(f;R)$. Analogamente, pondo $M' = \sup_{x \in [t_i, \lambda]} f(x)$ e $M'' = \sup_{x \in [\lambda, t_{i+1}]} f(x)$, temos que $M' \le M_i$ e $M'' \le M_i$, logo $S(f;Q) \le S(f;R)$. 
+
+Desta forma, $s(f;P) \le s(f;R) \le s(f;Q)$ e $S(f;P) \ge S(f;R) \ge S(f;Q)$, e está provado o teorema por indução.
+\end{proof}
+
+O conjunto de somas inferiores e superiores sempre existe. Além disso, temos o seguinte:
+
+\begin{teoremabox}{Teorema 15}
+Seja $f: [a, b] \rightarrow \mathbb{R}$ uma função limitada. Então, para quaisquer partições $P$ e $Q$ de $[a,b]$, sendo $m = \inf_{x \in [a,b]} f(x)$ e $M = \sup_{x \in [a,b]} f(x)$:
+\[ m(b-a) \le s(f;P) \le S(f;Q) \le M(b-a) \]
+Em especial, $\int_{\underline{a}}^{b} f(x) dx \le \int_{a}^{\overline{b}} f(x) dx$.
+\end{teoremabox}
+
+\begin{proof}
+Como $m(b-a) = s(f;P_0)$ com $P_0 = \{a, b\}$ sendo a partição base definida anteriormente, então pelo fato de $P_0 \subseteq P$, temos $m(b-a) \le s(f;P)$ pelo Teorema 14. Similarmente, $S(f,Q) \le M(b-a)$.
+
+Ademais, como $P \cup Q$ refina ambos $P$ e $Q$, então novamente pelo Teorema 14:
+\[ s(f;P) \le s(f; P \cup Q) \le S(f; P \cup Q) \le S(f;Q) \]
+provando a última desigualdade central. Seja então $A = \{s(f;P) : P \in \mathcal{P}\}$ o conjunto de somas inferiores e $B = \{S(f;P) : P \in \mathcal{P}\}$ o conjunto de somas superiores. Como para todos $x \in A, y \in B$ temos $x \le y$, temos que $\sup A \le \inf B$, pois qualquer elemento de $B$ é cota superior de $A$. (Observe que $A$ é limitada superiormente por qualquer $S(f,Q)$ e $B$ é limitada inferiormente por qualquer $s(f,P)$). Assim:
+\[ \int_{\underline{a}}^{b} f(x) dx = \sup A \le \inf B = \int_{a}^{\overline{b}} f(x) dx \]
+Isso mostra que a definição faz sentido!
+\end{proof}
+
+\begin{teoremabox}{Teorema 16}
+Sejam $a < c < b$ e $f: [a,b] \rightarrow \mathbb{R}$ limitada. Então:
+\[ \int_{\underline{a}}^{b} f(x) dx = \int_{\underline{a}}^{c} f(x) dx + \int_{\underline{c}}^{b} f(x) dx \]
+\[ \int_{a}^{\overline{b}} f(x) dx = \int_{a}^{\overline{c}} f(x) dx + \int_{c}^{\overline{b}} f(x) dx \]
+\end{teoremabox}
+
+\begin{proof}
+Provamos para a integral inferior. O outro caso é análogo por simetria.
+
+\begin{lemma}{16.1}
+Sejam $a < c < b$ e $f: [a,b] \rightarrow \mathbb{R}$ limitada. Então:
+\begin{itemize}
+    \item Dada uma partição $P \in \mathcal{P}([a,b])$ tal que $c \in P$, existem $A \in \mathcal{P}([a,c])$ e $B \in \mathcal{P}([c,b])$ tais que $P = A \cup B$ e vale também $s(f;P) = s(f;A) + s(f;B)$.
+    \item Reciprocamente, se $A \in \mathcal{P}([a,c])$ e $B \in \mathcal{P}([c,b])$, então $A \cup B \in \mathcal{P}([a,b])$ e $s(f; A \cup B) = s(f;A) + s(f;B)$.
+\end{itemize}
+\end{lemma}
+
+\begin{proof}[Prova do lema]
+Seja $P = \{t_0, t_1, \dots, t_n\}$ com $c = t_i$ para algum $i$. Então sendo $A = \{t_0, \dots, t_i\}$ e $B = \{t_i, \dots, t_n\}$, temos que $A \in \mathcal{P}([a,c])$ e $B \in \mathcal{P}([c,b])$ e:
+\[ s(f,A) + s(f,B) = \sum_{j=1}^{i} m_j(t_j - t_{j-1}) + \sum_{j=i+1}^{n} m_j(t_j - t_{j-1}) = \sum_{j=1}^{n} m_j(t_j - t_{j-1}) = s(f,P) \]
+A recíproca segue a mesma lógica de soma de intervalos contíguos.
+\end{proof}
+
+Assim, dado $\epsilon > 0$, por propriedades de supremo existe $P \in \mathcal{P}([a,b])$ tal que $s(f,P) > \int_{\underline{a}}^{b} f - \epsilon/2$. Pelo Teorema 14, $s(f; P \cup \{c\}) \ge s(f;P) > \int_{\underline{a}}^{b} f - \epsilon$.
+
+Pelo Lema 16.1, $P \cup \{c\} = A \cup B$ com $A$ partição de $[a,c]$ e $B$ partição de $[c,b]$. Então:
+\[ \int_{\underline{a}}^{b} f - \epsilon < s(f; P \cup \{c\}) = s(f,A) + s(f,B) \le \int_{\underline{a}}^{c} f + \int_{\underline{c}}^{b} f \]
+Como vale para todo $\epsilon$, temos $\int_{\underline{a}}^{b} f \le \int_{\underline{a}}^{c} f + \int_{\underline{c}}^{b} f$.
+
+Por outro lado, dadas partições $A \in \mathcal{P}([a,c])$ e $B \in \mathcal{P}([c,b])$, temos que $A \cup B \in \mathcal{P}([a,b])$, logo:
+\[ s(f,A) + s(f,B) = s(f, A \cup B) \le \int_{\underline{a}}^{b} f \]
+Tomando o supremo sobre todos $A$ e $B$:
+\[ \int_{\underline{a}}^{c} f + \int_{\underline{c}}^{b} f \le \int_{\underline{a}}^{b} f \]
+Juntando as duas desigualdades, conclui-se a igualdade.
+\end{proof}
+
+\begin{teoremabox}{Corolário 16.1}
+Seja $P = \{t_0, \dots, t_m\}$ uma partição do intervalo $[a,b]$, e $f: [a,b] \rightarrow \mathbb{R}$ uma função escada, ou seja, uma função constante e igual a $\alpha_i$ em cada um dos intervalos abertos $(t_{i-1}, t_i)$ para todo $1 \le i \le m$. Então:
+\[ \int_{\underline{a}}^{b} f(x) dx = \int_{a}^{\overline{b}} f(x) dx = \sum_{i=1}^{m} \alpha_i (t_i - t_{i-1}) \]
+\end{teoremabox}
+
+(Nota: Os valores nas extremidades $t_i$ não importam).
+
+\begin{proof}
+Pelo Teorema 16, aplicado repetidamente (ou seja, via indução) temos que
+\[ \int_{\underline{a}}^{b} f(x) dx = \sum_{i=1}^{m} \int_{\underline{t_{i-1}}}^{t_i} f(x) dx \]
+Afirmamos que $\int_{\underline{t_{i-1}}}^{t_i} f(x) dx = \alpha_i (t_i - t_{i-1})$. De fato, para todo $\epsilon$ pequeno (por exemplo, $\epsilon < \frac{1}{2}(t_i - t_{i-1})$) temos:
+\[ \int_{\underline{t_{i-1}}}^{t_i} f(x) dx = \int_{\underline{t_{i-1}}}^{t_{i-1}+\epsilon} f(x) dx + \int_{\underline{t_{i-1}+\epsilon}}^{t_i-\epsilon} f(x) dx + \int_{\underline{t_i-\epsilon}}^{t_i} f(x) dx \]
+Observemos que, como $m_i \le f(x) \le M_i$ para todo $x \in [t_{i-1}, t_{i-1}+\epsilon]$, então:
+\[ \min(f(t_{i-1}), \alpha_i) \cdot \epsilon \le \int_{\underline{t_{i-1}}}^{t_{i-1}+\epsilon} f(x) dx \le \max(f(t_{i-1}), \alpha_i) \cdot \epsilon \]
+E algo análogo vale para a integral de $t_i - \epsilon$ até $t_i$. Na integral do meio, a função é simplesmente constante e igual a $\alpha_i$ nesse intervalo. Logo:
+\begin{align*}
+\min(f(t_{i-1}), \alpha_i) \cdot \epsilon &+ (t_i - t_{i-1} - 2\epsilon) \alpha_i + \min(f(t_i), \alpha_i) \cdot \epsilon \le \int_{\underline{t_{i-1}}}^{t_i} f(x) dx \\
+&\le \max(f(t_{i-1}), \alpha_i) \cdot \epsilon + (t_i - t_{i-1} - 2\epsilon) \alpha_i + \max(f(t_i), \alpha_i) \cdot \epsilon
+\end{align*}
+Pondo $m = \min(f(t_{i-1}), \alpha_i)$, $M = \max(f(t_{i-1}), \alpha_i)$, $r = \min(f(t_i), \alpha_i)$ e $R = \max(f(t_i), \alpha_i)$, temos:
+\[ (m + r - 2\alpha_i)\epsilon + \alpha_i(t_i - t_{i-1}) \le \int_{\underline{t_{i-1}}}^{t_i} f(x) dx \le (M + R - 2\alpha_i)\epsilon + \alpha_i(t_i - t_{i-1}) \]
+Como a desigualdade vale para todo $\epsilon > 0$, fazendo $\epsilon \to 0$, pelo teorema do sanduíche (ou pela arbitrariedade do $\epsilon$), obtemos:
+\[ \int_{\underline{t_{i-1}}}^{t_i} f(x) dx = \alpha_i (t_i - t_{i-1}) \]
+O mesmo argumento se aplica para a integral superior $\int_{a}^{\overline{b}} f(x) dx$, resultando no mesmo valor.
+\end{proof}
+
+\begin{teoremabox}{Linearidade da Integral}
+Sejam $f, g: [a, b] \to \mathbb{R}$ limitadas. Então:
+\[
+\underline{\int_{a}^{b}} f(x) dx + \underline{\int_{a}^{b}} g(x) dx \le \underline{\int_{a}^{b}} [f(x) + g(x)] dx \le \overline{\int_{a}^{b}} [f(x) + g(x)] dx \le \overline{\int_{a}^{b}} f(x) dx + \overline{\int_{a}^{b}} g(x) dx
+\]
+\end{teoremabox}
+\begin{proof}
+
+\begin{enumerate}
+    \item Quando $c < 0$, $\underline{\int_{a}^{b}} c \cdot f = c \overline{\int_{a}^{b}} f$ e $\overline{\int_{a}^{b}} c \cdot f = c \cdot \underline{\int_{a}^{b}} f$.
+    \item Quando $c > 0$, $\underline{\int_{a}^{b}} c \cdot f = c \underline{\int_{a}^{b}} f$ e $\overline{\int_{a}^{b}} c \cdot f = c \cdot \overline{\int_{a}^{b}} f$.
+\end{enumerate}
+
+\paragraph{Prova de 1)}
+A segunda desigualdade é o Teorema 15 aplicado à $f+g$ e a terceira desigualdade é análoga à primeira.
+
+Para provar a primeira desigualdade, observemos que para qualquer intervalo $[c, d] \subseteq [a, b]$,
+\[
+\inf(f) + \inf(g) \le \inf(f+g)
+\]
+uma vez que a primeira é uma cota inferior de $f+g$ em $[c, d]$. Assim, para qualquer partição $P$ de $[a, b]$,
+\[
+s(f; P) + s(g; P) \le s(f+g; P)
+\]
+Para mostrar a desigualdade então observemos que, para toda partição $P$ de $[a, b]$,
+\[
+\underline{\int_{a}^{b}} [f(x) + g(x)] dx \ge s(f+g; P) \ge s(f; P) + s(g; P)
+\]
+e portanto
+\[
+\underline{\int_{a}^{b}} [f(x) + g(x)] dx = \sup_{P \in \mathcal{P}([a,b])} (s(f; P) + s(g; P)) = \sup_{P \in \mathcal{P}([a,b])} s(f; P) + \sup_{P \in \mathcal{P}([a,b])} s(g; P)
+\]
+\[
+= \underline{\int_{a}^{b}} f(x) dx + \underline{\int_{a}^{b}} g(x) dx
+\]
+
+\paragraph{Prova de 2)}
+Para $c > 0$, observamos que para toda partição $P$ de $[a, b]$ vale
+\[
+s(c \cdot f; P) = c \cdot s(f; P)
+\]
+dessa forma
+\[
+\underline{\int_{a}^{b}} cf = \sup \{ s(c \cdot f; P) : P \in \mathcal{P}([a,b]) \}
+\]
+\[
+= c \cdot \sup \{ s(f; P) : P \in \mathcal{P}([a,b]) \} = c \underline{\int_{a}^{b}} f
+\]
+Por simetria vale também $\overline{\int_{a}^{b}} c \cdot f = c \cdot \overline{\int_{a}^{b}} f$.
+
+Para $c < 0$, temos para todo intervalo $[x_{i-1}, x_i] \subseteq [a, b]$ que $\inf(cf) = -c \sup(f)$ e logo $s(cf; P) = c S(f; P)$ para toda partição $P$ de $[a, b]$.
+Assim, $-c > 0$ e dessa forma:
+\[
+s(c \cdot f; P) = (-c) \cdot (-1) S(f; P) = c \cdot S(f; P)
+\]
+\[
+\underline{\int_{a}^{b}} cf = \sup \{ s(c \cdot f; P) : P \in \mathcal{P}([a,b]) \} = \sup \{ c \cdot S(f; P) : P \in \mathcal{P}([a,b]) \}
+\]
+\[
+= (-c) \cdot \sup \{ -S(f; P) : P \in \mathcal{P}([a,b]) \} = (-c) \cdot (-1) \inf \{ S(f; P) : P \in \mathcal{P}([a,b]) \}
+\]
+\[
+= c \cdot \overline{\int_{a}^{b}} f
+\]
+Por simetria vale também $\overline{\int_{a}^{b}} c \cdot f = c \underline{\int_{a}^{b}} f$.
+\end{proof}
+
+Para as demonstrações anteriores utilizamos os seguintes lemas:
+
+\begin{lemma}
+Sejam $A, B$ dois conjuntos limitados superiormente. Então $\sup(A+B) = \sup(A) + \sup(B)$.
+\end{lemma}
+
+\begin{lemma}
+Seja $A$ um conjunto limitado superiormente e $c > 0$. Então $\sup(c \cdot A) = c \cdot \sup A$.
+\end{lemma}
+
+\begin{lemma}
+Seja $A$ um conjunto limitado inferiormente. Então $-A$ é limitado superiormente e $\inf(-A) = -\sup(A)$.
+\end{lemma}
+
+\begin{teoremabox}{Teorema 18 (Monotonicidade da Integral)}
+Sejam $f, g: [a, b] \to \mathbb{R}$ funções limitadas e $f(x) \le g(x)$ para todo $x \in [a, b]$. Então:
+\[
+\underline{\int_{a}^{b}} f \le \underline{\int_{a}^{b}} g \quad \text{e} \quad \overline{\int_{a}^{b}} f \le \overline{\int_{a}^{b}} g \text{ }
+\]
+\end{teoremabox}
+
+\begin{proof}
+Para toda partição $P$ de $[a, b]$, como $f \le g$ em todo ponto, temos:
+\[
+\inf_{x \in [t_{i-1}, t_i]} f(x) \le \inf_{x \in [t_{i-1}, t_i]} g(x) \text{ }
+\]
+para todo $1 \le i \le n$ e logo:
+\[
+s(f, P) = \sum_{i=1}^{n} \inf_{x \in [t_{i-1}, t_i]} f(x)(t_i - t_{i-1}) \le \sum_{i=1}^{n} \inf_{x \in [t_{i-1}, t_i]} g(x)(t_i - t_{i-1}) = s(g, P) \text{ }
+\]
+Logo $s(f, P) \le s(g, P)$. Consequentemente, como a integral inferior é o supremo das somas inferiores, para toda partição $P$:
+\[
+\underline{\int_{a}^{b}} g(x) dx \ge s(g, P) \ge s(f, P) \text{ }
+\]
+de onde segue que:
+\[
+\underline{\int_{a}^{b}} g(x) dx \ge \sup_{P} s(f, P) = \underline{\int_{a}^{b}} f(x) dx \text{ }
+\]
+A outra desigualdade, para a integral superior, é análoga.
+\end{proof}
+
+\begin{exercise}
+Para todas as partições $P$ e $Q$ de $[a, b]$ e $f: [a, b] \to \mathbb{R}$ limitada, vale $s(f; P) \le S(f; Q)$.
+\end{exercise}
+
+\begin{corollary}
+Seja $\mathcal{P}$ o conjunto das partições de $[a, b]$. Seja $\tilde{\mathcal{P}} \subseteq \mathcal{P}$ um subconjunto de partições. Então:
+\[
+\sup_{P \in \mathcal{P}} s(f, P) = \sup_{P \in \tilde{\mathcal{P}}} s(f, P) \text{ }
+\]
+\[
+\inf_{P \in \mathcal{P}} S(f, P) = \inf_{P \in \tilde{\mathcal{P}}} S(f, P) \text{ }
+\]
+\end{corollary}
+\begin{proof}
+Como $\tilde{\mathcal{P}} \subseteq \mathcal{P}$, então $\{s(f, P) : P \in \tilde{\mathcal{P}}\} \subseteq \{s(f, P) : P \in \mathcal{P}\}$. Denotando esses conjuntos por $\tilde{A}$ e $A$ respectivamente, temos então $\sup \tilde{A} \le \sup A$.
+Suponha que a desigualdade é estrita, e tome $\epsilon = \sup A - \sup \tilde{A} > 0$. Por propriedades de supremos, existe $P \in \mathcal{P}$ com $s(f, P) > \sup A - \epsilon = \sup \tilde{A}$.
+Porém, se tomarmos uma partição $P_0 \in \tilde{\mathcal{P}}$, a partição $P \cup P_0$ também pertence a $\tilde{\mathcal{P}}$ (se $\tilde{\mathcal{P}}$ for o conjunto de refinamentos) e $s(f, P \cup P_0) \ge s(f, P) > \sup \tilde{A}$. Contradição! Logo $\sup A = \sup \tilde{A}$.
+Por simetria, se $B = \{S(f, P) : P \in \mathcal{P}\}$ e $\tilde{B} = \{S(f, P) : P \in \tilde{\mathcal{P}}\}$, então $\inf B = \inf \tilde{B}$.
+\end{proof}
+
+Isso é uma reflexão do seguinte lema (mais geral):
+
+\begin{lemma}
+Sejam $A' \subseteq A$ e $B' \subseteq B$ conjuntos.
+\begin{enumerate}
+    \item Se $A'$ é limitado inferiormente e para todo $a' \in A'$ existe $a \in A$ com $a \le a'$ então $\inf A = \inf A'$.
+    \item Se $B'$ é limitado superiormente e para todo $b' \in B'$ existe $b \in B$ com $b \ge b'$ então $\sup B = \sup B'$.
+\end{enumerate}
+\end{lemma}
+
+\begin{definition}
+Dizemos que uma função $f: [a, b] \to \mathbb{R}$ limitada é Riemann integrável se 
+\[ \int_{a}^{\overline{b}} f(x)dx = \underline{\int_{a}^{b}} f(x)dx. \]
+Denotamos esse valor por $\int_{a}^{b} f(x)dx$.
+\end{definition}
+
+\begin{teoremabox}{Teorema 19}
+Uma função $f: [a, b] \to \mathbb{R}$ limitada é Riemann integrável se e somente se para todo $\epsilon > 0$ existe partição $P$ de $[a, b]$ tal que $S(f, P) - s(f, P) < \epsilon$.
+\end{teoremabox}
+
+\begin{proof}
+$(\Rightarrow)$ Suponha que $f$ é Riemann integrável. Seja $I = \int_{a}^{b} f(x)dx = \overline{\int_{a}^{b}} f(x)dx = \underline{\int_{a}^{b}} f(x)dx$. 
+
+Por propriedades de ínfimo e supremo, dado $\epsilon > 0$ existe partição $P$ de $[a, b]$ tal que 
+\[ I - s(f, P) < \epsilon/2 \]
+e existe partição $Q$ de $[a, b]$ tal que 
+\[ S(f, Q) - I < \epsilon/2. \]
+
+Logo, somando as duas desigualdades temos que $S(f, Q) - s(f, P) < \epsilon$. Considerando a partição $T = P \cup Q$ que refina ambas, temos $s(f, P) \le s(f, T)$ e $S(f, T) \le S(f, Q)$, e logo 
+\[ S(f, T) - s(f, T) < \epsilon. \]
+
+$(\Leftarrow)$ Para todo $\epsilon > 0$, existe $P$ partição de $[a, b]$ tal que $S(f, P) - s(f, P) < \epsilon$.
+
+Como $\overline{\int_{a}^{b}} f(x)dx \le S(f, P)$ e $-\underline{\int_{a}^{b}} f(x)dx \le -s(f, P)$, somando as duas desigualdades obtemos:
+\[ \overline{\int_{a}^{b}} f(x)dx - \underline{\int_{a}^{b}} f(x)dx \le S(f, P) - s(f, P) < \epsilon. \]
+
+Porém, do Teorema 15 sabemos que a diferença é não negativa, e logo para todo $\epsilon > 0$:
+\[ 0 \le \overline{\int_{a}^{b}} f(x)dx - \underline{\int_{a}^{b}} f(x)dx < \epsilon. \]
+Isto implica que $\overline{\int_{a}^{b}} f(x)dx = \underline{\int_{a}^{b}} f(x)dx$, o que prova que $f$ é Riemann integrável.
+\end{proof}
+
+O caso geral do Teorema 19 é o seguinte:
+
+\begin{theorem}[Teorema 19B]
+Sejam $A, B \subseteq \mathbb{R}$ não vazios tais que para todo $x \in A$ e $y \in B$, $x \le y$. Então:
+\[ \sup A = \inf B \iff \text{para todo } \epsilon > 0 \text{ existe } x \in A, y \in B \text{ com } y - x < \epsilon. \]
+\end{theorem}
+
+\begin{teoremabox}{Definição 12}
+Dada $f: [a,b] \rightarrow \mathbb{R}$ limitada e $A \subseteq [a,b]$, definimos a oscilação de $f$ em $A$ por $$osc_A(f) = \sup_{x \in A} f(x) - \inf_{x \in A} f(x)$$
+Note que
+$$S(f,P) - s(f,P) = \sum_{i=1}^n osc_{[t_{i-1}, t_i]}(f) \cdot \Delta t_i$$
+\end{teoremabox}
+
+\begin{teoremabox}{Definição 13}
+$f: [a,b] \rightarrow \mathbb{R}$ é uniformemente contínua se para todo $\epsilon > 0$, existe $\delta > 0$ tal que se $x, y \in [a,b]$ e $|x-y| < \delta$, então $|f(x) - f(y)| < \epsilon$.
+\end{teoremabox}
+
+\begin{teoremabox}{Teorema 20}
+Toda função $f: [a,b] \rightarrow \mathbb{R}$ que é contínua em um intervalo fechado $[a,b]$ é uniformemente contínua em $[a,b]$.
+\end{teoremabox}
+
+\begin{teoremabox}{Teorema 21}
+Toda função contínua $f: [a, b] \to \mathbb{R}$ é integrável.
+\end{teoremabox}
+
+\begin{proof}
+Pelo Teorema 20, $f$ é uniformemente contínua em $[a, b]$. Então, dado $\epsilon > 0$, seja $\delta > 0$ tal que $x, y \in [a, b]$ com $|x - y| < \delta$ implica $|f(x) - f(y)| < \frac{\epsilon}{b-a}$.
+
+Seja $P \in \mathcal{P}([a, b])$, $P = \{t_0, \dots, t_n\}$ uma partição com $\max |t_i - t_{i-1}| < \delta$. Então, para todo $1 \le i \le n$:
+\[ \sup_{x \in [t_{i-1}, t_i]} f(x) - \inf_{x \in [t_{i-1}, t_i]} f(x) \le \frac{\epsilon}{b-a} \] 
+
+Pois $t_i - t_{i-1} < \delta$. Logo, sendo $m_i := \inf_{x \in [t_{i-1}, t_i]} f(x)$ e $M_i := \sup_{x \in [t_{i-1}, t_i]} f(x)$:
+\begin{align*}
+S(f, P) - s(f, P) &= \sum_{i=1}^{n} (M_i - m_i)(t_i - t_{i-1}) \\
+&< \sum_{i=1}^{n} \frac{\epsilon}{b-a}(t_i - t_{i-1}) \\
+&= \frac{\epsilon}{b-a} \sum_{i=1}^{n} (t_i - t_{i-1}) \\
+&= \frac{\epsilon}{b-a} (t_n - t_0) = \frac{\epsilon(b - a)}{b - a} = \epsilon 
+\end{align*}
+
+Ou seja, mostramos que para todo $\epsilon > 0$, existe partição $P$ com $S(f, P) - s(f, P) < \epsilon$. Em particular, dado $\epsilon > 0$, existe $P$ com:
+\[ S(f, P) - \underline{\int_{a}^{b}} f(x)dx < \epsilon \] 
+
+Assim, como
+\[ s(f, P) \le \underline{\int_{a}^{b}} f(x)dx \le \overline{\int_{a}^{b}} f(x)dx \le S(f, P) \]
+temos que 
+\[ 0 \le \overline{\int_{a}^{b}} f(x)dx - \underline{\int_{a}^{b}} f(x)dx < \epsilon \] 
+Como $\epsilon$ é arbitrário, segue que $\int_{a}^{b} f(x)dx = \underline{\int_{a}^{b}} f(x)dx$, e $f$ é integrável.
+\end{proof}
+
+\begin{teoremabox}{Teorema 22}
+Sejam $f, g: [a, b] \to \mathbb{R}$ limitadas e integráveis. Então:
+\begin{enumerate}
+    \item $f \cdot g$ é integrável; 
+    \item Se existir $k$ tal que $0 < k < |g(x)|$ para todo $x \in [a, b]$, então $f/g$ é integrável (ou seja, se $\inf |g(x)| > 0$); 
+    \item $|\int_{a}^{b} f(x) dx| \le \int_{a}^{b} |f(x)| dx$ (Desigualdade Triangular). 
+\end{enumerate}
+\end{teoremabox}
+
+\begin{proof}
+\textbf{1)} Seja $M_f = \sup |f|$ e $M_g = \sup |g|$.  Então para todos $x, y \in [a, b]$:
+\[ |f(x)g(x) - f(y)g(y)| = |f(x)g(x) - f(x)g(y) + f(x)g(y) - f(y)g(y)| \] 
+\[ \le |f(x)||g(x) - g(y)| + |g(y)||f(x) - f(y)| \] 
+\[ \le M_f |g(x) - g(y)| + M_g |f(x) - f(y)| \] 
+\[ \le M \cdot (|g(x) - g(y)| + |f(x) - f(y)|) \text{ com } M = \max(M_f, M_g) \ge 0. \] 
+
+Logo, para todo intervalo $I \subseteq [a, b]$,
+\[ osc_I(f \cdot g) \equiv \sup_{x,y \in I} |f(x)g(x) - f(y)g(y)| \le M [\sup_{x,y \in I} (|f(x) - f(y)| + |g(x) - g(y)|)] \] 
+\[ \le M \sup_{x,y \in I} |f(x) - f(y)| + M \sup_{x,y \in I} |g(x) - g(y)| = M(osc_I f + osc_I g). \] 
+
+Assim, para uma partição $P = \{t_0, t_1, \dots, t_n\}$ de $[a, b]$:
+\[ S(f \cdot g, P) - s(f \cdot g, P) = \sum_{i=1}^{n} osc_{[t_{i-1}, t_i]}(f \cdot g)(t_i - t_{i-1}) \le M \sum_{i=1}^{n} (osc_I f + osc_I g)(t_i - t_{i-1}) \] 
+\[ = M [S(f, P) - s(f, P) + S(g, P) - s(g, P)]. \] 
+
+Se $M = 0$, trivialmente $f \cdot g$ é integrável pois $S(f \cdot g, P) = s(f \cdot g, P)$ para toda $P$ (de fato, $M=0 \Rightarrow f=g=0$). 
+Sendo $M > 0$, como $f$ e $g$ são integráveis, existem partições $P_0, Q_0$ tais que $S(f, P_0) - s(f, P_0) < \frac{\epsilon}{2M}$ e $S(g, Q_0) - s(g, Q_0) < \frac{\epsilon}{2M}$. 
+
+Com isso,
+\[ \overline{\int_{a}^{b}} fg \, dx - \underline{\int_{a}^{b}} fg \, dx \le S(fg, P_0 \cup Q_0) - s(fg, P_0 \cup Q_0) \] 
+\[ \le M[S(f, P_0 \cup Q_0) - s(f, P_0 \cup Q_0) + S(g, P_0 \cup Q_0) - s(g, P_0 \cup Q_0)] \] 
+\[ \le M[S(f, P_0) - s(f, P_0)] + M[S(g, Q_0) - s(g, Q_0)] < M \cdot \frac{\epsilon}{2M} + M \cdot \frac{\epsilon}{2M} = \epsilon. \] 
+Como $\epsilon > 0$ foi arbitrário, as integrais superior e inferior coincidem e $f \cdot g$ é integrável. 
+
+\textbf{2)} Mostraremos que $1/g$ é integrável, e depois aplicaremos a afirmação 1 sobre $f \cdot (1/g)$. 
+\[ \left| \frac{1}{g(x)} - \frac{1}{g(y)} \right| = \frac{|g(y) - g(x)|}{|g(x)||g(y)|} < \frac{|g(y) - g(x)|}{k^2} \] 
+e dessa forma, para todo intervalo $I \subseteq [a, b]$,
+\[ osc_I \frac{1}{g} = \sup_{x,y \in I} \left| \frac{1}{g(x)} - \frac{1}{g(y)} \right| \le \sup_{x,y \in I} \frac{|g(y) - g(x)|}{k^2} = \frac{osc_I g}{k^2}. \] 
+
+Portanto, por argumento análogo à afirmação 1, para toda partição $P$:
+\[ S(1/g, P) - s(1/g, P) \le \frac{1}{k^2} (S(g, P) - s(g, P)). \] 
+Como $g$ é integrável, dado $\epsilon > 0$ existe partição $P$ com $S(g, P) - s(g, P) < k^2 \epsilon$, logo 
+\[ S(1/g, P) - s(1/g, P) < \frac{k^2 \epsilon}{k^2} = \epsilon. \] 
+Logo as integrais coincidem e consequentemente o produto $f/g = f \cdot \frac{1}{g}$ é integrável. 
+
+\textbf{3)} 
+\begin{lemma}[Lema 22.1]
+Para todos $x, y \in \mathbb{R}$, $||x| - |y|| \le |x - y|$. 
+\end{lemma}
+\begin{proof}
+Pela desigualdade triangular:
+$|x| = |x - y + y| \le |x - y| + |y| \Rightarrow |x| - |y| \le |x - y|$. 
+$|y| = |y - x + x| \le |y - x| + |x| \Rightarrow |y| - |x| \le |x - y|$. 
+Logo $||x| - |y|| = \max(|x| - |y|, |y| - |x|) \le |x - y|$. 
+\end{proof}
+
+Para todo $x, y \in [a, b]$, $||f(x)| - |f(y)|| \le |f(x) - f(y)|$ pelo Lema 22.1. 
+Assim, para todo intervalo $I \subseteq [a, b]$,
+\[ osc_I |f| = \sup_{x,y \in I} ||f(x)| - |f(y)|| \le \sup_{x,y \in I} |f(x) - f(y)| = osc_I f. \] 
+Consequentemente, para toda partição $P$:
+\[ S(|f|, P) - s(|f|, P) \le S(f, P) - s(f, P). \] 
+Como $f$ é integrável, existe partição $P$ com $S(f, P) - s(f, P) < \epsilon$. 
+\[ \overline{\int_{a}^{b}} |f(x)| dx - \underline{\int_{a}^{b}} |f(x)| dx \le S(|f|, P) - s(|f|, P) < \epsilon. \] 
+As integrais superior e inferior coincidem, logo $|f|$ é integrável. 
+Como para todo $x \in [a, b]$, $-|f(x)| \le f(x) \le |f(x)|$,  por monotonicidade:
+\[ -\int_{a}^{b} |f(x)| dx \le \int_{a}^{b} f(x) dx \le \int_{a}^{b} |f(x)| dx \Rightarrow \left| \int_{a}^{b} f(x) dx \right| \le \int_{a}^{b} |f(x)| dx. \] 
+\end{proof}
+
+\begin{teoremabox}{Teorema 23}
+Sejam $f, g: [a, b] \to \mathbb{R}$ duas funções com:
+\begin{itemize}
+    \item $f$ limitada e integrável;
+    \item Existe $c > 0$ tal que $osc(g, J) \le c \cdot osc(f, J)$ para todo intervalo $J \subseteq [a, b]$;
+\end{itemize}
+então $g$ é integrável. 
+\end{teoremabox}
+
+\begin{proof}
+Dado $\epsilon > 0$, como $f$ é integrável, existem partições $P, Q$ de $[a, b]$ tais que $s(f, P) > \int_{a}^{b} f(x)dx - \frac{\epsilon}{2c}$ e $S(f, Q) < \int_{a}^{b} f(x)dx + \frac{\epsilon}{2c}$.  Denotamos o valor da integral de $f$ por $I$. 
+
+Considerando a partição comum $P \cup Q$, temos que $S(f, P \cup Q) - s(f, P \cup Q) < \frac{\epsilon}{c}$.  Se $P \cup Q = \{t_0, t_1, \dots, t_n\}$, então: 
+
+\begin{align*}
+S(g, P \cup Q) - s(g, P \cup Q) &= \sum_{i=1}^{n} (\sup_{[t_{i-1}, t_i]} g - \inf_{[t_{i-1}, t_i]} g)(t_i - t_{i-1})  \\
+&= \sum_{i=1}^{n} osc_{[t_{i-1}, t_i]} g \cdot (t_i - t_{i-1})  \\
+&\le c \cdot \sum_{i=1}^{n} osc_{[t_{i-1}, t_i]} f \cdot (t_i - t_{i-1})  \\
+&= c \cdot [S(f, P \cup Q) - s(f, P \cup Q)]  \\
+&< c \cdot \frac{\epsilon}{c} = \epsilon. 
+\end{align*}
+
+Como $\epsilon$ é arbitrário, $g$ é integrável pelo Teorema 14.1. 
+\end{proof}
+
+\begin{teoremabox}{Teorema 24}
+Toda função monótona $f: [a, b] \to \mathbb{R}$ é integrável. 
+\end{teoremabox}
+
+\begin{proof}
+Vamos supor que $f$ seja não constante e não decrescente. Logo $f(b) - f(a) > 0$. 
+Seja $P = \{t_0, \dots, t_n\}$ uma partição com $\max |t_i - t_{i-1}| < \delta$ tal que $\delta < \frac{\epsilon}{f(b) - f(a)}$.  Temos:
+
+\begin{align*}
+S(f, P) - s(f, P) &= \sum_{i=1}^{n} osc_{[t_{i-1}, t_i]} f \cdot (t_i - t_{i-1})  \\
+&< \sum_{i=1}^{n} (f(t_i) - f(t_{i-1})) \frac{\epsilon}{f(b) - f(a)}  \\
+&= \frac{\epsilon}{f(b) - f(a)} \sum_{i=1}^{n} (f(t_i) - f(t_{i-1}))  \\
+&= \frac{\epsilon}{f(b) - f(a)} [f(t_n) - f(t_0)]  \\
+&= \frac{\epsilon (f(b) - f(a))}{f(b) - f(a)} = \epsilon. 
+\end{align*}
+
+Como $\epsilon$ foi arbitrário, $f$ é integrável.  Se $f$ for monótona não crescente, então $-f$ é integrável, logo $f$ é integrável.  Obviamente, se $f$ é constante, o resultado segue pelos casos anteriores, cobrindo assim todos os casos. 
+\end{proof}
+
