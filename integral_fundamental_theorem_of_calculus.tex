@@ -1,0 +1,163 @@
+\section*{Teorema Fundamental do Cálculo e outras fórmulas clássicas} 
+
+\begin{definition}
+Dada uma função $f: [a,b] \rightarrow \mathbb{R}$ integrável, definiremos a \textbf{integral indefinida} como a função $F: [a,b] \rightarrow \mathbb{R}$,
+\[ F(x) := \int_a^x f(t) dt \] 
+\end{definition}
+
+\begin{teoremabox}{Teorema 31}
+Seja $f: [a,b] \rightarrow \mathbb{R}$ integrável.
+\begin{enumerate}
+    \item Então sua integral indefinida $F$ é lipschitziana (e portanto, uniformemente contínua). 
+    \item Se $f$ é contínua em $c \in [a,b]$, então sua integral indefinida $F$ é derivável em $c$ e $F'(c) = f(c)$. 
+\end{enumerate}
+\end{teoremabox}
+
+\begin{proof}
+1) Como $f$ é integrável, é limitada: existe $K$ tal que $|f(t)| \le K$ para todo $t \in [a,b]$. Então se $x, y \in [a,b]$:
+\[ |F(y) - F(x)| = \left| \int_a^y f(t) dt - \int_a^x f(t) dt \right| = \left| \int_x^y f(t) dt \right| \le K|y-x| \] 
+$F$ é lipschitziana. Consequentemente, dado $\epsilon > 0$ podemos tomar $\delta = \frac{\epsilon}{2\max(K,1)}$ de forma que $|y-x| < \delta$ implica $|F(x) - F(y)| < \epsilon$, e $F$ é uniformemente contínua. 
+
+2) Suponha que, além de integrável, $f$ é contínua no ponto $c \in (a,b)$. Então dado $\epsilon > 0$, existe $\delta > 0$ tal que $|x-c| < \delta \implies |f(x) - f(c)| < \epsilon/2$.  Portanto:
+\[ f(c) - \epsilon/2 < f(x) < f(c) + \epsilon/2 \] 
+Portanto, dado um $x$ com $|x-c| < \delta$:
+\begin{itemize}
+    \item Se $x \ge c$, então temos por monotonicidade:
+    \[ \int_c^x (f(c) - \epsilon/2) dt \le \int_c^x f(t) dt \le \int_c^x (f(c) + \epsilon/2) dt \] 
+    \[ \Rightarrow (f(c) - \epsilon/2)(x-c) \le \int_c^x f(t) dt \le (f(c) + \epsilon/2)(x-c) \quad (*) \] 
+    \item Se $x \le c$, então temos por monotonicidade que $(f(c) + \epsilon/2)(c-x) \ge \int_x^c f(t) dt \ge (f(c) - \epsilon/2)(c-x)$. Isto é, como $\int_c^x f(t) dt = -\int_x^c f(t) dt$, temos que:
+    \[ (f(c) + \epsilon/2)(x-c) \le \int_c^x f(t) dt \le (f(c) - \epsilon/2)(x-c) \quad (**) \] 
+\end{itemize}
+Dividindo ambos $(*)$ e $(**)$ por $x-c$ (que no segundo caso é negativo) temos que:
+\[ f(c) - \epsilon/2 \le \frac{\int_c^x f(t) dt}{x-c} = \frac{F(x) - F(c)}{x-c} \le f(c) + \epsilon/2 \] 
+Isto é, para todo $\epsilon > 0$ existe $\delta$ tal que $|x-c| < \delta$ implica $|\frac{F(x) - F(c)}{x-c} - f(c)| < \epsilon$. Pela definição de derivada $F'(c) = \lim_{x \to c} \frac{F(x) - F(c)}{x-c} = f(c)$. 
+\end{proof}
+
+\begin{definition}
+Dada uma função $f: (a,b) \rightarrow \mathbb{R}$ dizemos que $F: [a,b] \rightarrow \mathbb{R}$ é uma \textbf{primitiva} de $f$ se $F' = f$ em todo ponto. 
+\end{definition}
+
+\textbf{Observação:} Apesar da mesma notação ($F$), integral indefinida e primitiva são objetos diferentes. De fato, uma função não precisa ter nenhuma propriedade em especial (ser integrável, etc), a priori, para possuir uma primitiva, e possuirá infinitas primitivas distintas. Se $G_1, G_2$ são duas primitivas, $G_1' - G_2' = (G_1 - G_2)' = 0$, logo $G_1 - G_2$ é uma constante em todo ponto do intervalo. 
+
+Pelo Teorema 31, se $f$ é contínua então sua integral indefinida é uma primitiva. O que provaremos com o \textbf{Teorema Fundamental do Cálculo} é que não é necessário assumir que $f$ é contínua; se $f$ possui ao menos uma primitiva e é integrável, então sua integral indefinida é uma das primitivas. 
+
+\begin{teoremabox}{Teorema 32 (Teorema Fundamental do Cálculo)}
+Se $f: [a,b] \rightarrow \mathbb{R}$ é integrável e possui ao menos uma primitiva $F$, então:
+\[ \int_a^b f(x) dx = F(b) - F(a) \]
+\end{teoremabox}
+
+\textbf{Obs.:} Note que, como todo par de primitivas de $f$ difere por uma constante, a quantidade $F(b) - F(a)$ é invariante e independe da escolha da primitiva.
+
+\begin{proof}
+Seja $(P_m)_{m \in \mathbb{N}}$ uma sequência de partições com $\lim |P_m| = 0$.
+Seja $P_m = \{t_0^{(m)}, \dots, t_{k_m}^{(m)}\}$. Pelo Teorema do Valor Médio, aplicado sobre cada intervalo $[t_{i-1}^{(m)}, t_i^{(m)}]$, existe um ponto $x_i^{(m)}$ nesse intervalo tal que $F'(x_i^{(m)}) = \frac{F(t_i^{(m)}) - F(t_{i-1}^{(m)})}{t_i^{(m)} - t_{i-1}^{(m)}}$.
+
+Logo, como $F' = f$, tomando a partição pontuada $\dot{P}_m := \{x_1^{(m)}, \dots, x_{k_m}^{(m)}\}$, temos a soma de Riemann:
+\begin{align*}
+\Sigma(f, \dot{P}_m) &= \sum_{i=1}^{k_m} f(x_i^{(m)})(t_i^{(m)} - t_{i-1}^{(m)}) = \sum_{i=1}^{k_m} [F(t_i^{(m)}) - F(t_{i-1}^{(m)})] \\
+&= F(t_{k_m}^{(m)}) - F(t_0^{(m)}) = F(b) - F(a)
+\end{align*}
+Como $|P_m| \rightarrow 0$ e $f$ é integrável, a soma de Riemann converge para a integral:
+\[ \int_a^b f(x) dx = \lim_{m \to \infty} \Sigma(f, \dot{P}_m) = F(b) - F(a) \]
+\end{proof}
+
+\begin{teoremabox}{Teorema 33 (Mudança de Variáveis)}
+Seja $g: [c,d] \rightarrow [a,b]$ uma função derivável com $g'$ integrável. Se $f: [a,b] \rightarrow \mathbb{R}$ é contínua, então:
+\[ \int_{g(c)}^{g(d)} f(x) dx = \int_c^d f(g(t)) g'(t) dt \]
+\end{teoremabox}
+
+\begin{proof}
+Como $f$ é contínua, ela admite uma primitiva $F$ (pelo Teorema 31). Pela regra da cadeia, a função composta $F \circ g$ é derivável e:
+\[ (F \circ g)'(t) = F'(g(t)) \cdot g'(t) = f(g(t)) \cdot g'(t) \]
+Como $f$ e $g$ são contínuas, $f \circ g$ é contínua. Como $g'$ é integrável, o produto $(f \circ g) \cdot g'$ é integrável. Aplicando o Teorema Fundamental do Cálculo (Teorema 32):
+\[ \int_c^d f(g(t)) \cdot g'(t) dt = (F \circ g)(d) - (F \circ g)(c) = F(g(d)) - F(g(c)) \]
+Pela definição de $F$ como primitiva de $f$, o termo da direita é exatamente $\int_{g(c)}^{g(d)} f(x) dx$. A igualdade segue.
+\end{proof}
+
+\textbf{Observação:} Informalmente, ao utilizar na prática uma mudança de variáveis, temos uma integral $I = \int_a^b f(x) dx$. Encontramos um padrão que nos permite extrair uma nova variável: $f(x) dx = g(u) du$ para alguma $g$. Encontramos $c, d$ tais que $u(c) = a$ e $u(d) = b$, e escrevemos:
+\[ I = \int_a^b f(x) dx = \int_{u(c)}^{u(d)} g(u) du = \int_c^d g(u(t)) u'(t) dt \]
+que é o que obtemos no "$du = u'(t) dt$" informalmente.
+
+\begin{teoremabox}{Teorema 34 (Integração por Partes)}
+Sejam $f, g: [a,b] \rightarrow \mathbb{R}$ com derivadas tais que ambas $f'$ e $g'$ são integráveis. Então:
+\[ \int_a^b f(x) g'(x) dx + \int_a^b f'(x) g(x) dx = f(b)g(b) - f(a)g(a) \]
+\end{teoremabox}
+
+\begin{proof}
+Como $f$ e $g$ possuem derivadas, elas são contínuas e portanto integráveis. Logo os produtos $f g'$ e $f' g$ são integráveis. Pela regra do produto:
+\[ (fg)'(x) = f'(x)g(x) + f(x)g'(x) \]
+Como a soma de integráveis é integrável, $(fg)'$ é integrável e $fg$ é uma primitiva de $(fg)'$. Pelo Teorema Fundamental do Cálculo:
+\[ \int_a^b (fg)'(x) dx = (fg)(b) - (fg)(a) \]
+\[ \int_a^b [f'(x)g(x) + f(x)g'(x)] dx = f(b)g(b) - f(a)g(a) \]
+Pela linearidade da integral, obtemos o resultado.
+\end{proof}
+
+\section*{Limites de integrais e integrais impróprias}
+
+\begin{teoremabox}{Teorema 35}
+Seja $f: (a, b] \rightarrow \mathbb{R}$ tal que $f$ é limitada em $(a, b]$ e integrável em $[c, b]$ para todo $c \in (a, b)$. Então $f$ é integrável em $[a, b]$ e:
+\[ \int_{a}^{b} f(x) dx = \lim_{c \to a^+} \int_{c}^{b} f(x) dx \]
+\end{teoremabox}
+
+\begin{proof}
+Como $f$ é limitada em $(a, b)$ e está definida em $b$, então existe $K$ tal que $|f(x)| \le K$ para todo $x \in [a, b]$. Se $K=0$, então $f$ é identicamente nula e o resultado é trivial. Suponhamos então $K > 0$.
+
+Dado $\epsilon > 0$, ponha $c_\epsilon = \min(a + \frac{\epsilon}{4K}, b)$. Como $f$ é integrável em $[c_\epsilon, b]$, existe partição $\tilde{P}$ de $[c_\epsilon, b]$ tal que $S(f, \tilde{P}) - s(f, \tilde{P}) < \epsilon/2$.
+
+Logo, sendo $P = \{a\} \cup \tilde{P}$ uma partição de $[a, b]$, temos:
+\begin{align*}
+S(f, P) - s(f, P) &= S(f|_{[c_\epsilon, b]}, \tilde{P}) - s(f|_{[c_\epsilon, b]}, \tilde{P}) + (M - m)(c_\epsilon - a) \\
+&< \frac{\epsilon}{2} + (M - m)(c_\epsilon - a) \le \frac{\epsilon}{2} + 2K \cdot \frac{\epsilon}{4K} = \epsilon
+\end{align*}
+sendo $M = \sup_{[a, c_\epsilon]} f$ e $m = \inf_{[a, c_\epsilon]} f$. Logo $\inf_P [S(f, P) - s(f, P)] = 0$, e $f$ é integrável.
+
+ highlighting a small interval [a, c_epsilon] near the left endpoint where the function is bounded]
+
+Além disso, pela propriedade de aditividade da integral:
+\[ \left| \int_{a}^{b} f(x) dx - \int_{c}^{b} f(x) dx \right| = \left| \int_{a}^{c} f(x) dx \right| \le \int_{a}^{c} |f(x)| dx \le K(c - a) \]
+Como $K(c - a) \to 0$ quando $c \to a^+$, o resultado segue.
+\end{proof}
+
+\begin{teoremabox}{Corolário 35.1}
+Seja $f: (a, b) \rightarrow \mathbb{R}$ limitada e integrável em todo $[c, d] \subseteq (a, b)$, então $f$ é integrável em $[a, b]$ e $\int_{a}^{b} f(x) dx = \lim_{c \to a^+, d \to b^-} \int_{c}^{d} f(x) dx$.
+\end{teoremabox}
+
+\begin{teoremabox}{Teorema 36 (Critério de Comparação)}
+Sejam $f, g: (a, b] \rightarrow \mathbb{R}$ tais que $0 \le f(x) \le g(x)$ em todo ponto e $g$ é integrável. Então se $f$ é integrável em $[c, b]$ para todo $c \in (a, b)$, então $f$ é integrável em $[a, b]$ e $\int_{a}^{b} f(x) dx \le \int_{a}^{b} g(x) dx$.
+\end{teoremabox}
+
+\begin{proof}
+Como $0 \le f(x) \le g(x)$ e $g$ é integrável, $g$ é limitada e portanto $f$ é limitada. O resultado segue do Teorema 35.
+\end{proof}
+
+\begin{definition}
+Dizemos que uma integral imprópria $\int_{a}^{b} f(x) dx$ é \textbf{absolutamente convergente} se a integral $\int_{a}^{b} |f(x)| dx$ é convergente.
+\end{definition}
+
+\textbf{Exemplo 1:} Observemos que $[0, 1) = [0, \frac{1}{2}) \cup [\frac{1}{2}, \frac{2}{3}) \cup \dots = \bigcup_{k \ge 1} I_k$ com $I_k = [1 - \frac{1}{k}, 1 - \frac{1}{k+1}]$.
+Temos $|I_k| = \frac{1}{k+1} - \frac{1}{k} = \frac{k - (k+1)}{k(k+1)} \Rightarrow |I_k| = \frac{1}{k(k+1)}$.
+Então podemos pôr $f(x) = \sum_{k \ge 1} (-1)^{k+1} (k+1) \chi_{I_k}$.
+Logo $\int_{0}^{1} f(x) dx = \sum_{k \ge 1} (-1)^{k+1} (k+1) \frac{1}{k(k+1)} = \sum_{k \ge 1} \frac{(-1)^{k+1}}{k} = 1 - \frac{1}{2} + \frac{1}{3} - \dots = \ln 2$.
+Porém $\int_{0}^{1} |f(x)| dx = \sum \frac{1}{k}$, que diverge.
+
+\begin{teoremabox}{Teorema 37}
+Seja $f: (a,b) \rightarrow \mathbb{R}$ (ou $[a, b), (a, b]$) contínua. Então se a integral imprópria converge absolutamente, isto é, existe $\int_{a}^{b} |f(x)| dx$, então a integral imprópria converge, isto é, existe $\int_{a}^{b} f(x) dx$. Vale que:
+\[ \left| \int_{a}^{b} f(x) dx \right| \le \int_{a}^{b} |f(x)| dx \]
+\end{teoremabox}
+
+\textbf{Nota:} Na definição de integral imprópria (Definição 22) assumimos $f$ contínua.
+
+\begin{proof}
+Observemos que, sendo $f^{+}(x) = \max(f(x), 0)$ e $f^{-}(x) = \max(-f(x), 0)$ as partes positiva e negativa de $f$, então:
+\begin{align*}
+    f &= f^{+} - f^{-} \\
+    |f| &= f^{+} + f^{-}
+\end{align*}
+de onde segue que:
+\[ f^{+} = \frac{|f| + f}{2} \quad \text{e} \quad f^{-} = \frac{|f| - f}{2} \]
+de onde segue que $0 \le f^{+}, f^{-} \le |f|$.
+
+Como $f$ e $|f|$ são contínuas, $f^{+}$ e $f^{-}$ são contínuas. Logo, pela teoria da comparação (Corolário 36.2) segue que ambas $f^{+}$ e $f^{-}$ são integráveis em $(a, b)$ e logo $f = f^{+} - f^{-}$ é integrável, dando:
+\[ \int_{a}^{b} f(x) dx = \int_{a}^{b} f^{+}(x) dx - \int_{a}^{b} f^{-}(x) dx \]
+
+\end{proof}

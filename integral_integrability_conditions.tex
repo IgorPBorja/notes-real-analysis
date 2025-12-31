@@ -1,0 +1,136 @@
+\section*{Condições de Integrabilidade}
+
+\begin{definition}
+Um conjunto $X \subseteq \mathbb{R}$ tem \textbf{conteúdo nulo} (segundo Jordan) se existe uma coleção finita de intervalos abertos $I_j = (a_j, b_j)$, $1 \le j \le m$, com $a_j, b_j \in \mathbb{R}$, que cobre $X$:
+\[ X \subseteq \bigcup_{j=1}^{m} I_j \]
+com $\sum_{j=1}^{m} |I_j| < \epsilon$ para qualquer $\epsilon > 0$.
+\end{definition}
+
+Observe que todo conjunto com conteúdo nulo é limitado. Se cada $I_j$ possui extremidades reais (não pode ser infinito), então
+\[ X \subseteq [\min_{1 \le i \le n} a_i, \max_{1 \le i \le n} b_i] \]
+A união finita de intervalos abertos possui um comprimento total finito.
+
+Podemos trivialmente substituir intervalo aberto por fechado na definição acima, pois são equivalentes. A ida é trivial; para a volta, se para todo $\epsilon > 0$ existe uma cobertura de $X$ por intervalos fechados cuja soma dos comprimentos é menor que $\epsilon/2$, então, em particular, existem $I_1, \dots, I_m$ intervalos fechados com $\bigcup_{j=1}^{m} I_j \supseteq X$ e $\sum |I_j| < \frac{\epsilon}{2}$. Sendo $I_j = [a_j, b_j]$ e definindo
+\[ A_j = \left( a_j - \frac{\epsilon}{4m}, b_j + \frac{\epsilon}{4m} \right) \]
+temos que 
+\[ \sum_{j=1}^{m} |A_j| = \frac{\epsilon}{2} + \sum_{j=1}^{m} |I_j| < \epsilon \]
+Isso mostra que $X$ tem conteúdo nulo, segundo Jordan.
+
+\begin{teoremabox}{Teorema 27}
+Se $X \subseteq (a,b)$ possui conteúdo nulo, então dado $\epsilon > 0$ existe uma partição $P$ de $[a,b]$ tal que a soma dos comprimentos dos intervalos de $P$ que intersectam $X$ é menor que $\epsilon$.
+\end{teoremabox}
+
+\begin{proof}
+% Como uma união finita de intervalos fechados pode ser expressa como uma união finita de intervalos fechados disjuntos (mesma coisa para intervalos abertos).
+
+\begin{lemma}
+A união finita de intervalos fechados pode ser escrita como uma união finita de intervalos fechados disjuntos.
+\end{lemma}
+
+\begin{proof}
+Procedemos por indução na quantidade de intervalos. O caso $m=1$ é trivial. Suponha então válida para a união de $n$ intervalos fechados. Seja $X = \bigcup_{j=1}^{n+1} I_j$. Por hipótese de indução existem $J_1 = [a_1, b_1], \dots, J_\lambda = [a_\lambda, b_\lambda]$ disjuntos com $a_1 \le b_1 < a_2 \le b_2 < \dots < a_\lambda \le b_\lambda$ tais que $\bigcup_{j=1}^{n} I_j = \bigcup_{k=1}^{\lambda} J_k$. 
+
+Se $I_{n+1}$ não intersecta nenhum $J_k$, então a coleção é uma coleção finita de intervalos fechados disjuntos. Caso contrário, sejam $J_{k_1}$ o primeiro e $J_{k_m}$ o último intervalo que $I_{n+1}$ intersecta. Então:
+\[ I_{n+1} \cup J_{k_1} \cup \dots \cup J_{k_m} = [\min(a_{k_1}, a_{n+1}), \max(b_{k_m}, b_{n+1})] \]
+e teremos que 
+\[ \bigcup_{j=1}^{n+1} I_j = J_1 \cup \dots \cup J_{k_1-1} \cup [\min(a_{k_1}, a_{n+1}), \max(b_{k_m}, b_{n+1})] \cup J_{k_m+1} \cup \dots \cup J_\lambda \]
+é uma coleção finita de intervalos fechados disjuntos. O que prova a indução. O lema para intervalos abertos é análogo.
+\end{proof}
+
+Se $X \subseteq (a,b)$ possui conteúdo nulo, existem $I_1, \dots, I_n$ intervalos fechados disjuntos com $\bigcup_{j=1}^{n} I_j \supseteq X$ e $\sum |I_j| < \epsilon$. Podemos supor sem perda de generalidade que $I_j \subseteq (a,b)$, do contrário basta remover a parte que sai de $(a,b)$ ou remover $I_j$ completamente se $I_j \cap (a,b) = \emptyset$. Assim, sendo $I_j = [a_j, b_j]$, podemos tomar a partição $P = \{a, a_1, b_1, a_2, b_2, \dots, a_n, b_n, b\}$. A soma dos comprimentos dos intervalos de $P$ que intersectam $X$ é:
+\[ \sum_{j=1}^{n} (b_j - a_j) = \sum_{j=1}^{n} |I_j| < \epsilon \]
+\end{proof}
+
+\begin{definition}
+Dada função limitada $f:[a,b] \rightarrow \mathbb{R}$, e $x \in [a,b]$, definimos a oscilação de $f$ no ponto $x$ como o limite da oscilação de vizinhanças cada vez menores centradas em $x$:
+\[ \omega(f,x) := \lim_{\delta \to 0} \omega(\delta) = \lim_{\delta \to 0} \text{osc}_{[x-\delta, x+\delta] \cap [a,b]}(f) \text{ } \]
+Note que $\omega(\delta)$ como função de $\delta$ é limitada (por $M-m$, com $M = \sup(f)$ e $m = \inf(f)$) e não-decrescente, assim esse limite sempre existe.
+\end{definition}
+
+\begin{teoremabox}{Teorema 28}
+Uma função $f: [a,b] \rightarrow \mathbb{R}$ limitada é integrável se e somente se para todo $\delta > 0$ o conjunto de pontos com oscilação maior ou igual a $\delta$, 
+\[ F_\delta = \{x \in [a,b] : \omega(f,x) \ge \delta\} \text{ } \]
+possui conteúdo nulo (segundo Jordan, vide Definição 17).
+\end{teoremabox}
+
+\begin{proof}
+$(\Rightarrow)$ Suponha que $f$ é integrável. Se existe $\delta$ tal que $F_\delta$ não possui conteúdo nulo, então existe $\alpha$ tal que toda cobertura de $F_\delta$ por intervalos fechados possui soma dos comprimentos dos intervalos de pelo menos $\alpha$.
+
+Assim, de toda partição $P$ de $[a,b]$ com $I_j = [t_{j-1}, t_j]$, seja $L = \{1 \le j \le m : I_j \cap F_\delta \neq \emptyset\}$ o conjunto de índices dos intervalos que intersectam $F_\delta$, então $\cup_{j \in L} I_j \supseteq F_\delta$ e logo $\sum_{j \in L} |I_j| \ge \alpha$.
+
+Como existe $x_j \in I_j \cap F_\delta$ para todo $j \in L$, então $\text{osc}_{I_j}(f) \ge \omega(f,x_j) \ge \delta$. Assim:
+\[ S(f,P) - s(f,P) \ge \sum_{j \in L} \text{osc}_{I_j}(f) \cdot |I_j| \ge \delta \cdot \sum_{j \in L} |I_j| \ge \delta \cdot \alpha > 0 \text{ } \]
+Como a partição $P$ é arbitrária, $\inf(S-s) \ge \delta \alpha > 0$, e $f$ não é integrável, contradição! Logo $F_\delta$ possui conteúdo nulo.
+
+$(\Leftarrow)$ Supondo que $c(F_\delta) = 0$ para todo $\delta > 0$. Vamos precisar do seguinte lema:
+
+\begin{lemma}
+Seja $f: [a,b] \rightarrow \mathbb{R}$ limitada. Se $\omega(f,x) < \epsilon$ para todo $x \in [a,b]$, então existe uma partição $P = \{t_0, \dots, t_n\}$ de $[a,b]$ tal que $\text{osc}_{I_j}(f) < \epsilon$ para todo $j$.
+\end{lemma}
+
+\begin{proof}
+Denote por $\omega(f, I) := \text{osc}_I(f)$ a oscilação no intervalo $I$. Para cada $x \in [a,b]$, vamos construir um intervalo $I_x$ onde a função oscila pouco, isto é, onde $\omega(f, I_x) < \epsilon$.
+
+De fato, como $\omega(f,x) < \epsilon$, ponha $\tilde{\epsilon} = \epsilon - \omega(f,x) > 0$. Então pela definição de oscilação pontual como o ínfimo das oscilações nas vizinhanças, existe $\delta_x$ tal que $\omega(f, [x-\delta_x, x+\delta_x] \cap [a,b]) < \epsilon$. Tome $I_x = (x-\delta_x, x+\delta_x) \cap [a,b]$ (de forma que $\omega(f, I_x) < \epsilon$).
+
+
+Assim, como $\cup I_x = [a,b]$ é uma cobertura de $[a,b]$ por abertos e pelo Teorema de Borel-Lebesgue admite subcobertura finita $V = \{J_{x_1}, \dots, J_{x_n}\}$. Assim $\tilde{V} = \{I_{x_1}, \dots, I_{x_n}\}$ com $I_{x_k}$ fechados é uma cobertura de $[a,b]$ por intervalos fechados de "baixa oscilação" (menor que $\epsilon$). 
+
+Sejam $P = \{t_0 = a, t_1, \dots, t_k = b\}$ as extremidades dos intervalos $I_{x_m}$ em ordem crescente. Observemos que todo $[t_{j-1}, t_j]$ deve estar contido em algum $I_{x_m}$ — do contrário existiria uma extremidade de algum intervalo $I_{x_m}$ estritamente entre esses dois. Temos então nossa partição.
+\end{proof}
+
+Seguimos agora para finalizar a demonstração do Teorema 28:
+Se $f$ é constante, é trivial. Suponha que $f$ não é constante. Dado $\epsilon > 0$, tome $\delta = \frac{\epsilon}{2(b-a)}$.
+
+Como $F_\delta$ tem conteúdo nulo, existe cobertura de $F_\delta$ por intervalos fechados disjuntos $I_j$ com $\sum_{j=1}^{k} |I_j| < \frac{\epsilon}{2(M-m)}$.
+
+Assim, $[a,b] \setminus \cup \text{int}(I_j) = \cup J_j$ é uma união de intervalos fechados disjuntos. Para cada $J_j$, como $J_j \cap F_\delta = \emptyset$, pelo Lema 28.1 existe uma partição $Q_j$ de $J_j$ tal que a oscilação de cada subintervalo de $Q_j$ é menor que $\delta$.
+
+Então pondo $P$ como a união de $Q_j$ e das extremidades dos intervalos $I_j$ temos que (pondo $M = \sup_{[a,b]}(f), m = \inf_{[a,b]}(f)$):
+\begin{align*}
+S(f,P) - s(f,P) &= \sum_{j=1}^{m} [S(f,Q_j) - s(f,Q_j)] + \sum_{j=1}^{k} \text{osc}_{\bar{I}_j}(f)|I_j| \text{ } \\
+&\le \sum_{j=1}^{m} \delta \cdot |Q_j| + (M-m) \sum_{j=1}^{k} |I_j| \text{ } \\
+&\le \delta \cdot (b-a) + (M-m) \cdot \frac{\epsilon}{2(M-m)} \text{ } \\
+&= \frac{\epsilon}{2(b-a)} \cdot (b-a) + \frac{\epsilon}{2} = \epsilon \text{ }
+\end{align*}
+Como $\epsilon > 0$ é arbitrária, $f$ é integrável. Isso finaliza a demonstração do Teorema 28.
+\end{proof}
+
+\begin{teoremabox}{Teorema 29 (auxiliar para o Teorema 30)}
+Dada $f: [a,b] \rightarrow \mathbb{R}$, $f$ é contínua em $x$ se e só se $\omega(f,x) = 0$.
+\end{teoremabox}
+
+Reciprocamente, o conjunto de descontinuidades de $f$ é $D_f = \{x \in [a,b] : \omega(f,x) > 0\}$.
+
+\begin{proof}
+$f$ é contínua em $x$ se dado $\epsilon > 0$, existe $\delta > 0$ tal que $y \in (x-\delta, x+\delta)$ implica $|f(y) - f(x)| < \epsilon$. Isso é equivalente a, para todo $\epsilon > 0$, existe $\delta > 0$ tal que $\omega(f, [a,b] \cap (x-\delta, x+\delta)) < \epsilon$, o que é equivalente a $\lim_{\delta \to 0} \omega(f, [a,b] \cap (x-\delta, x+\delta)) = 0$, ou seja $\omega(f,x) = 0$. Vide Definição 18.
+\end{proof}
+
+\begin{teoremabox}{Teorema 30 (Caracterização da Integrabilidade)}
+Uma função limitada $f: [a,b] \rightarrow \mathbb{R}$ é integrável por Riemann se e só se o seu conjunto de descontinuidades $D_f$ possui medida nula.
+\end{teoremabox}
+
+\begin{proof}
+Observe que, pelo Teorema 29, o conjunto de descontinuidades $D_f$ é
+\[ D_f = \{x \in [a,b] : \omega(f,x) > 0\} = \bigcup_{n \in \mathbb{N}} F_{1/n} \]
+
+($\Rightarrow$) Se $f$ é integrável, então pelo Teorema 28, todo $F_{1/n}$ possui conteúdo nulo. Então, dado $\epsilon > 0$, existe uma cobertura finita $U_n = \{I_{n,j}\}_{j=1}^{k_n}$ de $F_{1/n}$ por intervalos abertos com $\sum_{j=1}^{k_n} |I_{n,j}| < \frac{\epsilon}{2^n}$.
+
+Temos que $\cup_{n=1}^{\infty} U_n$ cobre $D_f$. Portanto,
+\[ \sum_{n=1}^{\infty} \sum_{j=1}^{k_n} |I_{n,j}| < \sum_{n=1}^{\infty} \frac{\epsilon}{2^n} = \epsilon \]
+Assim, $D_f$ tem medida nula (segundo Lebesgue).
+
+($\Leftarrow$) Suponha que $D_f$ possui medida nula. Então cada $F_{1/n}$ também possui medida nula. Precisamos do seguinte lema:
+
+\begin{lemma}
+Para todo $\delta > 0$, $F_\delta = \{x \in [a,b] : \omega(f,x) \ge \delta\}$ é compacto.
+\end{lemma}
+
+\begin{proof}
+$F_\delta$ já é limitado. Vamos provar que é fechado. Sendo $(x_n)$ uma sequência convergente em $F_\delta$ com $x = \lim x_n$, precisamos mostrar que $x \in F_\delta$. De fato, para todo $\epsilon > 0$, existe $x_n$ com $x_n \in (x-\epsilon, x+\epsilon)$, e tomando um intervalo centrado em $x_n$, $I_{x_n} \subseteq (x-\epsilon, x+\epsilon) \cap [a,b]$, temos que $\omega(f, (x-\epsilon, x+\epsilon)) \ge \omega(f, I_{x_n}) \ge \delta$ para todo $\epsilon$. Logo $\omega(f,x) = \inf \omega(f, (x-\epsilon, x+\epsilon)) \ge \delta$, logo $x \in F_\delta$. Logo $F_\delta$ é compacto.
+\end{proof}
+
+Assim, como $F_{1/n}$ possui medida nula, isto é, dado $\epsilon > 0$ existe cobertura por abertos $(I_n)_{n \in \mathbb{N}}$ com $\sum |I_n| < \epsilon$, e é compacto pelo Lema, então pelo Teorema de Borel-Lebesgue existe uma subcobertura finita dessa cobertura, cujo tamanho total também vai ser menor que $\epsilon$. Ou seja, $F_{1/n}$ possui conteúdo nulo.
+
+Dado $\delta > 0$, existe $m \in \mathbb{N}$ com $\frac{1}{m} < \delta$, e logo $E_{1/m} \supseteq E_\delta$. Como $E_{1/m}$ possui conteúdo nulo, então $E_\delta$ também possui conteúdo nulo. Como $\delta > 0$ foi arbitrário, todo $E_\delta$ possui conteúdo nulo, e pelo Teorema 28 segue que $f$ é integrável.
+\end{proof}

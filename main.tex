@@ -29,6 +29,16 @@
 \graphicspath{{Figuras/}}
 
 \renewcommand{\theenumii}{\alph{enumii}}
+
+%% HACK: weird hack from AI to fix "missing character in font nullfont" error
+\makeatletter
+\@ifundefined{UseTaggingSocket}{
+  \newcommand{\UseTaggingSocket}[1]{}
+  \newcommand{\SuspendTagging}[1]{}
+  \newcommand{\ResumeTagging}[1]{}
+}{}
+\makeatother
+
 \usepackage[most]{tcolorbox}
 
 % Configuração para as caixas de teoremas (tcolorbox)
@@ -69,7 +79,10 @@
 
 \include{integral}
 \include{integral_star_partitions}
+\include{integral_integrability_conditions}
+\include{integral_fundamental_theorem_of_calculus}
 
 \chapter{Sequências e séries de funções}
+
 
 \end{document}
