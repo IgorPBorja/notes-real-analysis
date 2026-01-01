@@ -1,0 +1,402 @@
+\section*{Sequências e séries de funções}
+
+\begin{definition}[23]
+Dizemos que uma sequência $(f_n)$ de funções converge simplesmente (ou pontualmente) para uma função $f$ (sendo $D$ o domínio) se para todo $x \in D$,
+\[ \lim_{n \to \infty} f_n(x) = f(x) \]
+\end{definition}
+
+\textbf{Obs.:} Se $(a_n) \to a$ é uma sequência de números reais, e $f_n \to f$ pontualmente, \textbf{não} necessariamente $\lim f_n(a_n) = f(a)$.
+
+Por exemplo, a sequência $f_n: (0,1) \to \mathbb{R}$, $f_n(x) = x^n$  converge pontualmente para a função identicamente nula $f \equiv 0$. Seja $a_n = (1/2)^{1/n}$. Converge para $a=1$. Porém:
+\[ \lim f_n(a_n) = \lim \left( (1/2)^{1/n} \right)^n = \frac{1}{2} \neq f(a) = 0 \]
+
+\begin{teoremabox}{Teorema 38}
+Se $(f_n): X \to \mathbb{R}$ são contínuas e $f_n \to f$ uniformemente, então para todo $x$:
+\[ \lim_{n \to +\infty} \lim_{t \to x} f_n(t) = \lim_{t \to x} \lim_{n \to +\infty} f_n(t) = f(x) \]
+\end{teoremabox}
+
+\textbf{Prova:}
+\begin{align*}
+\lim_{t \to x} \lim_{n \to \infty} f_n(t) &= \lim_{t \to x} f(t) \quad \text{(convergência pontual em } t \text{)} \\
+&= f(x) \quad \text{(continuidade de } f \text{)}
+\end{align*}
+E por outro lado:
+\begin{align*}
+\lim_{n \to \infty} \lim_{t \to x} f_n(t) &= \lim_{n \to \infty} f_n(x) \quad \text{(continuidade de } f_n \text{)} \\
+&= f(x) \quad \text{(convergência pontual em } x \text{)}
+\end{align*}
+Logo os limites coincidem.
+
+Em particular, se $x_n \to x$, então sob essa hipótese de continuidade (convergência uniforme):
+\[ \lim f_n(x_n) = \lim (\lim f_n(x)) = f(x) \]
+Note que isso é diferente de $\lim f_n(a_n)$, que foi o que falhou no contra-exemplo anterior.
+
+\textbf{Exemplo 2:} $f_m: [0,1] \to \mathbb{R}$.
+Temos que
+\[ f_m(x) = \lim_{n \to +\infty} (\cos(m! \pi x))^{2n} \]
+Temos que $f_m(x) = 1$ se $x \in \{ \frac{1}{m!}, \frac{2}{m!}, \dots, \frac{m!}{m!} = 1 \}$ e $0$ caso contrário.
+Então $f_m \to f$ pontualmente com $f(x) = \begin{cases} 1 & \text{se } x \in \mathbb{Q} \\ 0 & \text{se } x \notin \mathbb{Q} \end{cases}$.
+Ou seja, $f = \chi_{\mathbb{Q}}$ (função de Dirichlet). Ou seja, temos uma sequência de funções integráveis que converge pontualmente a uma função não integrável. 
+
+\textbf{Exemplo 3:} $f_n: \mathbb{R} \to \mathbb{R}$
+\[ f_n(x) = \frac{1}{\sqrt{n}} \sin(nx) \]
+Temos que $f_n \to 0$ pontualmente (converge pontualmente para a função $f \equiv 0$).
+Porém $f_n'(x) = \frac{1}{\sqrt{n}} \cdot n \cos(nx) = \sqrt{n} \cos(nx)$.
+Em particular $f_n'(0) = \sqrt{n} \to +\infty$.
+Logo $(f_n')$ não converge a $f'$ (que seria $0$).
+
+\textbf{Exemplo 4:} $f_n: [0,1] \rightarrow \mathbb{R}$
+\[ f_n(x) = n^2 x (1-x^2)^n \]
+Temos que $f_n(0) = f_n(1) = 0$ para todo $n$ e $\lim f_n(x) = 0$ quando $0 < x < 1$.
+Pelo teste da razão:
+\[ \lim_{n \to +\infty} \frac{f_{n+1}(x)}{f_n(x)} = \lim_{n \to +\infty} \frac{(n+1)^2}{n^2}(1-x^2) = 1-x^2 < 1 \]
+Logo $f_n \to 0$ pontualmente.
+
+Porém, fazendo $u = 1-x^2$, $du = -2x dx$:
+\[ \int_0^1 f_n(x) dx = \int_0^1 n^2 x (1-x^2)^n dx = \frac{-n^2}{2} \int_1^0 u^n du = \frac{n^2}{2(n+1)} \]
+Logo
+\[ \lim_{n \to +\infty} \int_0^1 f_n(x) dx = \lim_{n \to +\infty} \frac{n^2}{2(n+1)} = +\infty \]
+Enquanto
+\[ \int_0^1 \lim_{n \to +\infty} f_n(x) dx = \int_0^1 0 dx = 0 \]
+Nesse caso
+\[ \lim \int f_n(x) dx \neq \int \lim f_n(x) dx \]
+A convergência pontual não implica poder trocar limite com integral.
+
+\begin{definition}[24]
+Dizemos que $f_n: X \to \mathbb{R}$ converge \textbf{uniformemente} para $f$, se para todo $\epsilon > 0$ existe $n_0 \in \mathbb{N}$ tal que para todo $n \ge n_0$:
+\[ |f_n(x) - f(x)| < \epsilon \]
+para todo $x \in X$. O mesmo $n_0$ vale para todo $x$, depende apenas de $\epsilon$.
+\end{definition}
+
+Na convergência pontual, o $n_0$ é uma função de $\epsilon$ e de $x$.
+\[ f_n \to f \text{ pont.} \iff \forall \epsilon > 0, \forall x \in X, \exists n_0(\epsilon, x) : n \ge n_0 \implies |f_n(x) - f(x)| < \epsilon \]
+\[ f_n \to f \text{ unif.} \iff \forall \epsilon > 0, \exists n_0(\epsilon), \forall x \in X : n \ge n_0 \implies |f_n(x) - f(x)| < \epsilon \]
+
+\begin{teoremabox}{Teorema 39}
+Definindo $||f-g||_X := \sup_{x \in X} |f(x) - g(x)|$ como a norma do supremo, temos que $f_n: X \to \mathbb{R}$ converge uniformemente para $f: X \to \mathbb{R}$ se e somente se
+\[ \lim_{n \to +\infty} ||f_n - f||_X = 0 \]
+\end{teoremabox}
+
+\begin{proof}
+Dado $\epsilon > 0$, existe $n_0 \in \mathbb{N}$ tal que eventualmente para $n \ge n_0$ a curva de $f_n$ vai estar sempre contida entre as curvas de $f-\epsilon$ e $f+\epsilon$.
+
+$(\Rightarrow)$ Suponha que $f_n \to f$ uniformemente. Então para todo $\epsilon > 0$ existe $n_0$ tal que para todo $x \in X$ e para todo $n \ge n_0$, $|f_n(x) - f(x)| < \epsilon$. Logo $\sup_{x \in X} |f_n(x) - f(x)| \le \epsilon$. Logo $\lim ||f_n - f||_X = 0$.
+
+$(\Leftarrow)$ Se existe esse limite, então para todo $\epsilon > 0$ existe $n_0 \in \mathbb{N}$ tal que para todo $n \ge n_0$, $||f_n - f||_X < \epsilon$.
+Ou seja, para todo $n \ge n_0$ e para todo $x \in X$,
+\[ |f_n(x) - f(x)| \le ||f_n - f||_X < \epsilon \]
+Assim $f_n \to f$ uniformemente pela definição.
+\end{proof}
+
+\begin{teoremabox}{Teorema 40 (Critério de Cauchy para Convergência Uniforme)}
+Uma sequência $f_n: X \rightarrow \mathbb{R}$ converge uniformemente se, e somente se, para todo $\epsilon > 0$ existe $N \in \mathbb{N}$ tal que para $m, n \ge N$:
+\[ ||f_n - f_m||_X < \epsilon \]
+\end{teoremabox}
+
+\begin{proof}
+$(\Rightarrow)$ Suponha que $(f_n)$ converge uniformemente e seja $f$ a função limite. Então dado $\epsilon > 0$ existe $N \in \mathbb{N}$ tal que $n \ge N$ e $x \in X$ implica $|f_n(x) - f(x)| < \frac{\epsilon}{2}$.
+Logo para todos $m, n \ge N$ e $x \in X$:
+\[ |f_n(x) - f_m(x)| \le |f_n(x) - f(x)| + |f(x) - f_m(x)| < \frac{\epsilon}{2} + \frac{\epsilon}{2} = \epsilon \]
+Como $x$ foi arbitrário, está provado que $(f_n)$ é de Cauchy.
+
+$(\Leftarrow)$ Suponha que $(f_n)$ é de Cauchy.
+Fixado $x \in X$, temos que a sequência $a_n = f_n(x)$ é de Cauchy em $\mathbb{R}$, logo converge para um dado $L_x$. Definimos a função $f: X \rightarrow \mathbb{R}$, $f(x) = L_x = \lim f_n(x)$, a função limite ponto-a-ponto. Basta provarmos que $f_n \to f$ uniformemente.
+
+De fato, dado $\epsilon > 0$, existe $N \in \mathbb{N}$ tal que $m, n \ge N$ e $x \in X \implies |f_n(x) - f_m(x)| < \epsilon/2$.
+Fixe $n \ge N$ qualquer. Pela desigualdade triangular, para todo $m \ge N$:
+\[ |f_n(x) - f(x)| \le |f_n(x) - f_m(x)| + |f_m(x) - f(x)| \]
+Tomando o limite quando $m \to \infty$:
+\[ \lim_{m \to +\infty} |f_n(x) - f_m(x)| = |f_n(x) - f(x)| \]
+Mas, como $|f_n(x) - f_m(x)| < \frac{\epsilon}{2}$, por monotonicidade do limite $|f_n(x) - f(x)| \le \frac{\epsilon}{2} < \epsilon$.
+
+Observemos que isso vale para todo $x \in X$. Ou seja, dado $\epsilon > 0$ existe $N \in \mathbb{N}$ tal que $n \ge N$ e $x \in X$ implica que $|f_n(x) - f(x)| < \epsilon$. É a definição de $f_n \to f$ uniformemente.
+\end{proof}
+
+\begin{teoremabox}{Teorema (Critério M de Weierstrass para Convergência de Séries)}
+Seja $(f_n): X \rightarrow \mathbb{R}$ sequência de funções e $f: X \rightarrow \mathbb{R}$. Seja $M_n := \sup_{x \in X} |f_n(x)|$.
+Se $\sum M_n$ converge, então $\sum f_n$ converge uniformemente.
+\end{teoremabox}
+
+\begin{proof}
+Como $M_n \ge 0$, trata-se de uma série de termos não-negativos. Se $\sum M_n$ converge, então converge absolutamente.
+Ou seja, dado $\epsilon > 0$ existe $N \in \mathbb{N}$ tal que $S - S_N < \epsilon$ (pondo $S_m := \sum_{i=1}^m M_i$ e $S = \lim S_m$).
+Assim, dado $\epsilon > 0$ existe $N$.
+Defina $F_m := \sum_{i=1}^m f_i$. Então para todos $m > n \ge N$ e $x \in X$:
+\[ |F_m(x) - F_n(x)| = \left| \sum_{j=n+1}^m f_j(x) \right| \le \sum_{j=n+1}^m |f_j(x)| \le \sum_{j=n+1}^m M_j \]
+\[ \le S_m - S_n \le S - S_N < \epsilon \]
+E portanto pelo Critério de Cauchy (Teorema 40), $(F_m)$ converge uniformemente. Como $(F_m)$ é a sequência de somas parciais, então $\sum f_n$ converge uniformemente.
+\end{proof}
+
+A recíproca é falsa: $f_n: X \rightarrow \mathbb{R}$ constante e igual a $(-1)^{n-1}/n$.
+Então como $\sum \frac{(-1)^{n-1}}{n}$ converge a uma constante, $\sum f_n$ converge uniformemente para a função $f: X \rightarrow \mathbb{R}$ constante e igual à soma da série ($\ln 2$).
+Por outro lado $M_n = \frac{1}{n}$ e $\sum M_n = \sum \frac{1}{n}$ é a série harmônica, que diverge.
+
+\begin{teoremabox}{Teorema 42 (Continuidade sob convergência uniforme)}
+Seja $(f_n): X \rightarrow \mathbb{R}$ e $f: X \rightarrow \mathbb{R}$ com $f_n \rightarrow f$ uniformemente. Então
+\[ \lim_{n \rightarrow +\infty} \lim_{t \rightarrow x} f_n(t) = \lim_{t \rightarrow x} \lim_{n \rightarrow +\infty} f_n(t) \]
+para todo $x \in X'$ (ponto de acumulação).
+Isso existe, assumindo que os limites parciais $\lim_{t \to x} f_n(t)$ e $\lim_{t \to x} f(t)$ ambos existem.
+
+Em particular, se $(f_n)$ são todas contínuas e $f_n \rightarrow f$ uniformemente, então $f$ é contínua.
+(convergência uniforme preserva continuidade)
+\end{teoremabox}
+
+\begin{proof}
+Ora, como existem $\lim_{t \to x} f(t)$ e $\lim_{t \to x} f_n(t)$ (pelo enunciado do Teorema), podemos definir
+\[ A_n = \lim_{t \rightarrow x} f_n(t) \quad \text{para todo } n \in \mathbb{N} \quad \text{e} \quad L = \lim_{t \rightarrow x} f_n(t) = \lim_{t \rightarrow x} \lim_{n \rightarrow +\infty} f_n(t) \]
+(a última igualdade segue do fato que convergência uniforme implica convergência pontual).
+
+\textbf{Afirmação 1:} $(A_n)$ converge.
+Pela definição de limite, existe $\delta_n$ tal que $t \in B_{\delta_n}(x) \setminus \{x\}$ implica que $|A_n - f_n(t)| < \epsilon/3$.
+Além disso, como $(f_n)$ é de Cauchy (pelo Teorema 40) então existe $N \in \mathbb{N}$ tal que $m, n \ge N$ implica $|f_n(t) - f_m(t)| < \frac{\epsilon}{3}$ para todo $t \in X$.
+
+Logo, dados $m, n \ge N$, podemos definir $\delta_{m,n} = \min(\delta_n, \delta_m)$, e ao tomar um ponto qualquer $t_{m,n} \in B_{\delta_{m,n}}(x) \setminus \{x\}$, segue que:
+\begin{align*}
+|A_n - A_m| &\le |A_n - f_n(t_{m,n})| + |f_n(t_{m,n}) - f_m(t_{m,n})| + |f_m(t_{m,n}) - A_m| \\
+&< \frac{\epsilon}{3} \text{ pois } |t_{m,n} - x| < \delta_n \\
+&< \frac{\epsilon}{3} \text{ pois } n, m \ge N \\
+&< \frac{\epsilon}{3} \text{ pois } |t_{m,n} - x| < \delta_m \\
+&= \epsilon
+\end{align*}
+Logo $(A_n)$ é de Cauchy, logo converge.
+
+\textbf{Afirmação 2:} $L = \lim A_n$.
+Seja $A = \lim A_n$. Então existe $N_A \in \mathbb{N}$ tal que $n \ge N_A \implies |A - A_n| < \frac{\epsilon}{4}$.
+Também existe $\delta_n > 0$ tal que $t \in B_{\delta_n}(x)$ implica que $|f_n(t) - A_n| < \frac{\epsilon}{4}$.
+Também existe, pela convergência uniforme, $N_f \in \mathbb{N}$ tal que $n \ge N_f \Rightarrow |f_n(t) - f(t)| < \frac{\epsilon}{4}$ para todo $t \in X$.
+Por fim, como existe limite de $f$ em $x$, existe $\delta > 0$ tal que $t \in B_{\delta}(x)$ implica que $|f(t) - L| < \frac{\epsilon}{4}$.
+
+Logo, pondo para todo $n \ge \max(N_A, N_f)$, pondo $\delta_{final} = \min(\delta_n, \delta)$ e escolhendo um ponto arbitrário $p_n \in B_{\delta_{final}}(x)$ como "testemunha" temos que:
+\begin{align*}
+|A - L| &\le |A - A_n| + |A_n - f_n(p_n)| + |f_n(p_n) - f(p_n)| + |f(p_n) - L| \\
+&< \frac{\epsilon}{4} \text{ (pois } n \ge N_A \text{)} \\
+&< \frac{\epsilon}{4} \text{ (pois } |p_n - x| < \delta_n \text{)} \\
+&< \frac{\epsilon}{4} \text{ (pois } n \ge N_f \text{)} \\
+&< \frac{\epsilon}{4} \text{ (pois } |p_n - x| < \delta \text{)} \\
+&= \epsilon
+\end{align*}
+Como isso vale para todo $\epsilon > 0$, então $A = L$. O que prova o teorema.
+\end{proof}
+
+Em particular, se $(f_n)$ todas contínuas então aplicando o Teorema que provamos temos:
+\begin{align*}
+\lim_{t \rightarrow x} \lim_{n \rightarrow +\infty} f_n(t) &= \lim_{n \rightarrow +\infty} \lim_{t \rightarrow x} f_n(t) \\
+\Rightarrow \lim_{t \rightarrow x} f(t) &= \lim_{n \rightarrow +\infty} f_n(x) \quad \text{(continuidade de } f_n \text{)} \\
+&= f(x) \quad \text{(convergência pontual em } x \text{)}
+\end{align*}
+para todo $x$, logo $f$ é contínua.
+
+\begin{tcolorbox}[title={\large Prova alternativa do Teorema 40}]
+    Sobre a volta do Teorema 40 (Critério de Cauchy), temos a seguinte explicação mais simples:
+    Por ser de Cauchy, dado $\epsilon > 0$ existe $N_0 \in \mathbb{N}$ tal que para todos $m, n \ge N_0$ e $x \in X$, $|f_n(x) - f_m(x)| < \frac{\epsilon}{2}$.
+    Como $(f_n(x))$ é de Cauchy, converge para um $f(x) \in \mathbb{R}$, e a função $f$ é assim implicitamente definida (ponto a ponto).
+    Assim, fixado $x$ e $n \ge N_0$:
+    \[ \frac{\epsilon}{2} \ge \lim_{m \rightarrow +\infty} |f_n(x) - f_m(x)| = |f_n(x) - \lim_{m \rightarrow +\infty} f_m(x)| = |f_n(x) - f(x)| \]
+    pela continuidade do Valor Absoluto em $\mathbb{R}$.
+    Logo para todo $n \ge N_0$ e $x \in X$:
+    \[ |f(x) - f_n(x)| \le \frac{\epsilon}{2} < \epsilon \]
+    Ou seja, $f_n \rightarrow f$ uniformemente.
+\end{tcolorbox}
+
+\begin{tcolorbox}[title={\large Prova alternativa do Teorema 42}]
+    Definimos $A_m = \lim_{t \to x} f_m(t)$.
+    Como $f_n \to f$ uniformemente, então é de Cauchy pelo Teorema 40 (referência ao critério de Cauchy), logo dado $\epsilon > 0$ existe $N_0 \in \mathbb{N}$ tal que para todo $m, n \ge N_0$ e $t \in X$:
+    \[ |f_n(t) - f_m(t)| < \frac{\epsilon}{2} \] 
+    Logo, pela continuidade do valor absoluto em $X$, e por monotonicidade do limite:
+    \[ \frac{\epsilon}{2} \ge \lim_{t \to x} |f_n(t) - f_m(t)| = | \lim_{t \to x} f_n(t) - \lim_{t \to x} f_m(t) | = |A_n - A_m| \] 
+    E $(A_m)$ é de Cauchy, logo converge. Seja $A = \lim A_m$.
+
+    Logo para todos $m, n \ge N_0$, $|A_n - A_m| \le \frac{\epsilon}{2} < \epsilon$.
+
+    Dado $\epsilon > 0$, existe $m_0 \in \mathbb{N}$ tal que $||f_m - f||_X < \frac{\epsilon}{3}$ para todo $m \ge m_0$ pela convergência uniforme.
+    Existe também $M \in \mathbb{N}$ tal que $|A_m - A| < \frac{\epsilon}{3}$ para todo $m \ge M$.
+
+    Fixe $k_0 = \max(m_0, M)$. Então existe $\delta > 0$ tal que $0 < |x - t| < \delta$ implica que $|f_{k_0}(t) - A_{k_0}| < \frac{\epsilon}{3}$ pela definição de $A_{k_0}$.
+
+    Logo, para $t$ tal que $0 < |x - t| < \delta$, temos:
+    \begin{align*}
+    |f(t) - A| &\le |f(t) - f_{k_0}(t)| + |f_{k_0}(t) - A_{k_0}| + |A_{k_0} - A| \\
+    &< \frac{\epsilon}{3} + |f_{k_0}(t) - A_{k_0}| + \frac{\epsilon}{3} \quad (\text{pois } k_0 \ge m_0 \text{ e } k_0 \ge M) \\
+    &< \frac{\epsilon}{3} + \frac{\epsilon}{3} + \frac{\epsilon}{3} \quad (\text{pois } 0 < |x-t| < \delta) \\
+    &= \epsilon
+\end{align*} 
+
+Como $\epsilon > 0$ foi arbitrário, então $\lim_{t \to x} f(t) = A$.
+
+Intuitivamente, se $n$ é suficientemente grande, então o $\delta$ que serve para $f_n$ vai servir para $f$ com um limitante similar:
+\[ 0 < |t - x| < \delta \implies |f(t) - A| < c \cdot \epsilon \] 
+para alguma constante $c$.
+Ou seja, quando a convergência é uniforme, o comportamento local se assemelha em uma vizinhança para $n$ suficientemente grande.
+\end{tcolorbox}
+
+
+\begin{teoremabox}{Teorema 43 (Teorema de Dini)}
+Seja $K$ compacto, $f_n: K \to \mathbb{R}$ contínuas, tal que $f_n \to f$ pontualmente e $f_n \ge f_{n+1}$ (monotonicamente decrescente).
+Se $f$ é contínua, então $f_n \to f$ uniformemente em $K$.
+\end{teoremabox}
+
+\begin{proof}
+Seja $g_n := f_n - f$. Como $(f_n(x))_n$ é monótona decrescente com limite $f(x)$, então $g_n(x) \downarrow 0$ (decresce para 0).
+Além disso $g_n$ é contínua, pois ambas $f_n$ e $f$ são contínuas.
+Dado $\epsilon > 0$, defina para todo $n \in \mathbb{N}$:
+\[ K_n = \{ x \in K : g_n(x) \ge \epsilon \} = g_n^{-1}([\epsilon, +\infty)) \] 
+(Note que $g_n(x) \ge 0$ para todo $x$).
+
+Em algum momento, uma curva vai estar inteiramente abaixo do $\epsilon$.
+Então $K_n$ é fechado (pré-imagem de fechado por função contínua) e limitado (pois $K_n \subseteq K$), logo compacto.
+
+Além disso, como $g_{n+1} \le g_n$, então se $x \in K_{n+1} \implies \epsilon \le g_{n+1}(x) \le g_n(x) \implies x \in K_n$. Logo $K_{n+1} \subseteq K_n$ para todo $n$.
+
+Se $(K_n)$ fossem todos não vazios, então temos que a interseção de compactos encaixados não vazios é não vazia.
+Então existe $x_0 \in \bigcap K_n$.
+Isso implica que $g_n(x_0) \ge \epsilon$ para todo $n \in \mathbb{N}$.
+Logo $\lim g_n(x_0) \ge \epsilon$.
+Mas $\lim g_n(x_0) = f(x_0) - f(x_0) = 0$, contradição (pois $\epsilon > 0$).
+
+Logo, existe $n_0 \in \mathbb{N}$ com $K_{n_0} = \emptyset$. E como são encaixados, logo $K_n = \emptyset$ para todo $n \ge n_0$.
+Isto é, para todo $n \ge n_0$ e para todo $x \in K$,
+\[ |f_n(x) - f(x)| = f_n(x) - f(x) = g_n(x) < \epsilon \] 
+E como $\epsilon$ foi arbitrário, $f_n \to f$ uniformemente.
+\end{proof}
+
+\begin{teoremabox}{Teorema 43' (Dual do Teorema de Dini)}
+Seja $K$ compacto, $f_n: K \to \mathbb{R}$ contínuas tal que $f_n \to f$ pontualmente e $f_n \le f_{n+1}$.
+Se $f$ é contínua, então $f_n \to f$ uniformemente em $K$.
+\end{teoremabox}
+
+\begin{proof}
+Pelo Teorema 43, $-f_n \to -f$ uniformemente em $K$. O resultado segue.
+\end{proof}
+
+\begin{teoremabox}{Teorema 44 (Convergência Uniforme preserva integral)}
+Se $f_n: [a,b] \rightarrow \mathbb{R}$ é uma sequência de funções integráveis tal que $f_n \rightarrow f$ uniformemente. Então:
+\begin{itemize}
+    \item $f$ é integrável.
+    \item $\int_{[a,b]} f = \lim \int_{[a,b]} f_n$ (ou seja $\int \lim f_n = \lim \int f_n$).
+\end{itemize}
+\end{teoremabox}
+
+\begin{proof}
+Defina $D_n$ o conjunto de descontinuidades de $f_n$, e $D$ o conjunto de descontinuidades de $f$.
+Se $x \in \bigcap D_n^c$, então $f_n$ é contínua em $x$ para todo $n \in \mathbb{N}$, isto é, $f_n$ é contínua em $x$ para todo $n$.
+Então, pelo Teorema 38 (como $f_n \rightarrow f$ uniformemente e $f_n$ contínua em $x$ em particular), $f$ é contínua em $x$.
+Logo $x \in D^c$.
+Portanto:
+\[ \bigcap D_n^c \subseteq D^c \Rightarrow (\bigcup D_n)^c \subseteq D^c \Rightarrow D \subseteq \bigcup D_n \]
+Como $f_n$ é integrável, $D_n$ tem medida nula.
+Sendo $D$ um subconjunto da união enumerável de conjuntos de medida nula (pois a união enumerável de conjuntos de medida nula tem medida nula), logo $D$ possui medida nula, e $f$ é integrável.
+
+Agora provemos a igualdade da segunda parte. Dado $\epsilon > 0$, existe $n_0 \in \mathbb{N}$ tal que $n \ge n_0 \Rightarrow |f_n(x) - f(x)| < \frac{\epsilon}{b-a}$ para todo $x \in [a,b]$. Ou seja, $f_n \rightarrow f$ uniformemente.
+
+Então:
+\begin{align*}
+\left| \int_a^b f_n(x) dx - \int_a^b f(x) dx \right| &= \left| \int_a^b (f_n - f)(x) dx \right| \\
+&\le \int_a^b |f_n(x) - f(x)| dx \\
+&< \int_a^b \frac{\epsilon}{b-a} dx = \epsilon
+\end{align*}
+E logo $\lim \int_a^b f_n(x) dx = \int_a^b f(x) dx$.
+\end{proof}
+
+\textbf{Exercício 2:} Mostre que $f_n: [0,1] \rightarrow \mathbb{R}$
+\[ f_n(x) = \frac{x^2}{x^2+(1-nx)^2} \]
+não converge uniformemente, e nenhuma subsequência converge uniformemente também.
+
+\subsection*{Contraexemplo para o Teorema de Bolzano-Weierstrass em funções}
+
+O Teorema de Bolzano-Weierstrass para sequências não vale na situação geral para funções. De fato, seja $f_n: [0, 2\pi] \rightarrow [-1, 1]$, $f_n(x) = \cos(nx)$.
+A sequência é uniformemente limitada (o limitante é o mesmo: $|f_n| \le 1, \forall n$).
+
+Se $f_{n_k} \rightarrow f$ uniformemente para alguma subsequência de índices $n_k$, então pontualmente $\lim (\cos(n_k x) - \cos(n_{k+1} x)) = 0$.
+Logo, pelo critério de Cauchy, $\lim \int (\cos(n_k x) - \cos(n_{k+1} x))^2 dx = 0$.
+%% TODO review this last claim about using the Cauchy criterion
+
+Porém:
+\[ \int_0^{2\pi} (\cos(n_k x) - \cos(n_{k+1} x))^2 dx = \int_0^{2\pi} (\cos^2(n_k x) - 2\cos(n_k x)\cos(n_{k+1} x) + \cos^2(n_{k+1} x)) dx \]
+Como $\int_0^{2\pi} \cos^2(mx) dx = \pi$ e $\int \cos(ax)\cos(bx) dx = 0$ se $a \ne b$, temos:
+\[ = \pi - 0 + \pi = 2\pi \neq 0 \]
+Logo não converge uniformemente.
+%% TODO this last part was changed at transcription, review this
+
+\subsection*{Função contínua não diferenciável em nenhum ponto}
+
+\begin{example}
+Seja
+\[ \varphi(x) = |x| \quad \text{se } |x| \le 1, \quad \varphi(x+2) = \varphi(x) \quad \forall x \in \mathbb{R} \]
+
+Sendo $f(x) = \sum_{n=0}^{\infty} (\frac{3}{4})^n \varphi(4^n x)$ então a série converge uniformemente, para uma função contínua.
+Porém $f$ não é diferenciável em nenhum ponto.
+\end{example}
+\begin{proof}
+
+    Observemos que $\varphi$ é Lipschitz, logo contínua.  Sendo $f(x) = \sum_{n=0}^{\infty} (\frac{3}{4})^n \varphi(4^n x)$ então a série converge uniformemente, para uma função contínua.
+
+    Defina $x \in \mathbb{R}$ qualquer e $m \in \mathbb{N}$. Defina $\delta_m = \pm \frac{1}{2} \cdot \frac{1}{4^m}$ (em que a escolha de sinal é feita de forma que não haja inteiro entre $4^m x$ e $4^m(x+\delta_m)$). Seja
+    $$\gamma_n = \frac{\varphi(4^n(x+\delta_m)) - \varphi(4^n x)}{\delta_m}$$
+
+
+    \begin{enumerate}
+    \item Se $n > m$, $4^n \delta_m = \pm \frac{1}{2} 4^{n-m}$ é um inteiro par (pois $n-m \ge 1$ implica $4^{n-m}/2 = 2 \cdot 4^{n-m-1} \in 2\mathbb{Z}$) e logo $\varphi(4^n(x+\delta_m)) = \varphi(4^n x)$, o que implica $\gamma_n = 0$.
+
+    \item Se $n = m$, $4^m \delta_m = \pm \frac{1}{2}$, logo $|\varphi(4^m(x+\delta_m)) - \varphi(4^m x)| = \frac{1}{2}$ (pela inclinação ser $\pm 1$ e não haver inteiro no meio).
+    Logo $|\gamma_m| = \frac{1/2}{|\delta_m|} = \frac{1/2}{(1/2)4^{-m}} = 4^m$.
+
+    \item Se $n < m$, não há inteiros entre $4^n x$ e $4^n(x+\delta_m)$ e logo
+    \[ |\gamma_n| = \frac{|\varphi(4^n(x+\delta_m)) - \varphi(4^n x)|}{|\delta_m|} \le \frac{|4^n(x+\delta_m) - 4^n x|}{|\delta_m|} = 4^n \]
+    \end{enumerate}
+
+    Assim,
+    \begin{align*}
+    \left| \frac{f(x+\delta_m) - f(x)}{\delta_m} \right| &= \left| \sum_{n=0}^{+\infty} \left( \frac{3}{4} \right)^n \gamma_n \right| \\
+    &= \left| \left( \frac{3}{4} \right)^m \gamma_m + \sum_{n=0}^{m-1} \left( \frac{3}{4} \right)^n \gamma_n \right| \\
+    &\ge \left( \frac{3}{4} \right)^m |\gamma_m| - \sum_{n=0}^{m-1} \left( \frac{3}{4} \right)^n |\gamma_n| \\
+    &\ge \left( \frac{3}{4} \right)^m 4^m - \sum_{n=0}^{m-1} \left( \frac{3}{4} \right)^n 4^n \\
+    &= 3^m - \sum_{n=0}^{m-1} 3^n = 3^m - \frac{3^m - 1}{2} = \frac{3^m + 1}{2}
+    \end{align*}
+    Como $\frac{3^m+1}{2} \to +\infty$, então o limite
+    \[ \lim_{\delta \to 0} \frac{f(x+\delta) - f(x)}{\delta} \]
+    não existe e $f$ não é diferenciável em $x$.
+    Como $x$ foi arbitrário, $f$ é contínua em todo ponto e não é diferenciável em nenhum ponto.
+\end{proof}
+
+\subsection*{Diferenciabilidade sob convergência uniforme}
+
+\begin{teoremabox}{Teorema 45}
+Sejam $(f_n): [a,b] \rightarrow \mathbb{R}$ sequência de funções diferenciáveis. Se existe $c \in [a,b]$ tal que $f_n(c)$ converge e $f_n'$ converge uniformemente, então $f_n \rightarrow f$ uniformemente, sendo $f$ diferenciável com $f' = g$ (onde $g = \lim f_n'$). 
+\end{teoremabox}
+
+\begin{proof}
+Pelo TVM aplicado a $f_n - f_m$, existe um $d_{n,m}$ entre $c$ e $x$ tal que: 
+\[ f_n(x) - f_m(x) = f_n(c) - f_m(c) + (x-c)(f_n'(d_{n,m}) - f_m'(d_{n,m})) \] 
+\[ |f_n(x) - f_m(x)| \le |f_n(c) - f_m(c)| + |x-c| |f_n'(d_{n,m}) - f_m'(d_{n,m})| \] 
+\[ \le |f_n(c) - f_m(c)| + (b-a) |f_n'(d_{n,m}) - f_m'(d_{n,m})| \] 
+
+Como $(f_n')$ converge uniformemente, dado $\epsilon > 0$, existe $N_0 \in \mathbb{N}$ tal que $|f_n' - f_m'| < \frac{\epsilon}{2(b-a)}$ 
+para todo $m, n \ge N_0$ (por ser de Cauchy, Teorema 40). 
+
+Similarmente, existe $N_1 \in \mathbb{N}$ tal que $|f_n(c) - f_m(c)| < \frac{\epsilon}{2}$ para todos $m, n \ge N_1$. 
+Assim, $|f_n(x) - f_m(x)| \le \frac{\epsilon}{2} + \frac{\epsilon}{2} = \epsilon$ para todos $m, n \ge N_2 = \max(N_0, N_1)$. 
+
+Como a convergência de $(f_n)$ independe de $x$, $(f_n)$ é de Cauchy e, portanto, uniformemente convergente (Teorema 40). 
+Seja $f = \lim f_n$. 
+
+Fixe agora $x_0 \in (a,b)$. Para todo $x \ne x_0$, existe $d_{n,m}$ entre $x$ e $x_0$ tal que: 
+\[ f_n(x) - f_m(x) = f_n(x_0) - f_m(x_0) + (f_n'(d_{n,m}) - f_m'(d_{n,m}))(x-x_0) \] 
+
+Pondo
+\[ q_n(x) := \frac{f_n(x) - f_n(x_0)}{x-x_0} \] 
+temos que
+\[ q_n(x) - q_m(x) = f_n'(d_{n,m}) - f_m'(d_{n,m}) \] 
+e
+\[ |q_n(x) - q_m(x)| = |f_n'(d_{n,m}) - f_m'(d_{n,m})| \] 
+
+Como $(f_n')$ converge uniformemente, então $(q_n)$ é de Cauchy uniformemente para um dado $x_0$. 
+
+Evidentemente: 
+1) $q_n$ é contínua, pois $f_n$ é diferenciável; 
+2) $q_n$ converge uniformemente para o limite pontual: 
+\[ q(x) = \lim_{n \to +\infty} q_n(x) = \lim_{n \to +\infty} \frac{f_n(x) - f_n(x_0)}{x-x_0} = \frac{f(x) - f(x_0)}{x-x_0} \] 
+
+E logo, pela convergência uniforme e existência de limite $\lim q_n(x_0)$ (pelo Teorema de troca de limites), podemos trocar a ordem dos limites: 
+\[ \lim_{x \to x_0} \frac{f(x) - f(x_0)}{x - x_0} = \lim_{x \to x_0} q(x) = \lim_{x \to x_0} \lim_{n \to +\infty} q_n(x) = \lim_{n \to +\infty} \lim_{x \to x_0} q_n(x) \] 
+\[ = \lim_{n \to +\infty} f_n'(x_0) = g(x_0) \implies f' = g \] 
+\end{proof}

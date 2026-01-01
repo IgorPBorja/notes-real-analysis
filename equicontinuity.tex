@@ -1,0 +1,133 @@
+\section*{Equicontinuidade e o Teorema de Arzela-Ascoli}
+
+\begin{definition}[25]
+Uma família $\mathcal{F}$ de funções é dita \textbf{equicontínua} se para todo $\epsilon > 0$ existe $\delta=\delta(\epsilon)>0$ tal que para todo $f \in \mathcal{F}$:
+\[ |x-y| < \delta \implies |f(x)-f(y)| < \epsilon \]
+($\delta$ independe de $x$ e de $f$).
+\end{definition}
+
+\textbf{Exemplos:}
+
+\begin{enumerate}
+
+\item Se $\mathcal{F}=\{f_n:[0,1]\rightarrow[0,1], f_n(x)=\frac{x}{n}, n\ge1\}$, então $\mathcal{F}$ é equicontínua com $\delta(\epsilon)=\epsilon$.
+
+\item Se $\mathcal{F}$ é uma família de funções Lipschitz-contínuas com a mesma constante de Lipschitz $L$ (mais formalmente: de forma que exista uma constante $L$ que valha para todas as funções), então $\mathcal{F}$ é equicontínua com $\delta(\epsilon)=\frac{\epsilon}{L}$.
+
+\item Considere $f_n: [a,b] \rightarrow \mathbb{R}$ tal que a sequência de derivadas é uniformemente limitada: $f_n$ é diferenciável e $|f_n'(x)| \le M$ para todo $n \in \mathbb{N}$ e $x \in [a,b]$.
+Então $\{f_n\}$ é equicontínua.
+
+De fato, pelo Teorema do Valor Médio (TVM), dados $x, y \in [a,b]$, existe $p \in (x,y)$ tal que:
+\[ f_n(x)-f_n(y)=f_n'(p)(x-y) \]
+Logo $|f_n(x)-f_n(y)| \le M|x-y|$. E caímos no exemplo anterior.
+\end{enumerate}
+
+\begin{teoremabox}{Teorema 46 (Arzela-Ascoli)}
+Este é o análogo de Bolzano-Weierstrass para sequências de funções.
+
+Seja $K \subseteq \mathbb{R}$ compacto, $f_n: K \rightarrow \mathbb{R}$ contínuas tais que $|f_n(x)| \le M_x$ para todo $n$ (limitada pontualmente), e $\{f_n\}$ é equicontínua.
+Então:
+\begin{enumerate}
+    \item $\{f_n\}$ é uniformemente limitada em $K$.
+    \item Existe subsequência $(f_{n_k})$ que converge uniformemente.
+\end{enumerate}
+\end{teoremabox}
+
+\subsection*{Exemplo de aplicação de Arzela-Ascoli:}
+Defina a norma $||\cdot||$ por $||f|| = \sup_{x \in [a,b]} (|f(x)| + |f'(x)|)$ no espaço vetorial de funções contínuas com derivada contínua, $C^1([a,b])$. Então a bola $\bar{B}_M(0)$ é sequencialmente compacta pelo Teorema de Arzela-Ascoli, ou seja, toda sequência possui subsequência convergente.
+%% TODO review this claim
+
+\subsection*{Demonstrando o teorema de Arzela-Ascoli}
+
+\begin{definition}[26]
+Dada uma família de funções de $X$ em $\mathbb{R}$, $\mathcal{F}$ (por exemplo, uma sequência de funções), dizemos que $\mathcal{F}$ é:
+\begin{itemize}
+    \item \textbf{Pontualmente limitada} (pointwise bounded) se existe uma função não negativa $\varphi: X \to \mathbb{R}_{\ge 0}$ tal que $|f| \le \varphi$ para toda $f \in \mathcal{F}$.
+    (ou seja $|f(x)| \le \varphi(x)$ para toda $f \in \mathcal{F}$ e $x \in X$).
+    \item \textbf{Uniformemente limitada} (uniformly bounded) se existe um número não negativo $M \ge 0$ tal que $|f| \le M$ para toda $f \in \mathcal{F}$.
+    (ou seja, $|f(x)| \le M$ para todo $f \in \mathcal{F}$ e $x \in X$).
+\end{itemize}
+\end{definition}
+
+\begin{teoremabox}{Teorema 47 (Critério da seleção diagonal)}
+Se $(f_n): E \to \mathbb{R}$ é uma sequência pontualmente limitada e $E$ é enumerável (conjunto infinito enumerável), então existe uma subsequência de funções que converge em todo $x \in E$.
+\end{teoremabox}
+
+\textbf{Prova:} Ora, como $(f_n)$ é pontualmente limitada, para todo $x \in E$ fixado, o conjunto $\{f_n(x) : n \in \mathbb{N}\}$ é limitado (pode ser visto como uma sequência limitada em $\mathbb{R}$, portanto pelo teorema de Bolzano-Weierstrass existe uma subsequência convergente).
+
+Em particular, se $E = \{x_1, x_2, \dots\}$ é uma enumeração de $E$:
+\begin{itemize}
+    \item Existe uma subsequência $\mathbb{N}_1 \subseteq \mathbb{N}$ tal que $(f_n(x_1))_{n \in \mathbb{N}_1}$ converge.
+    \item Para todo $k$, existe uma subsequência $\mathbb{N}_{k+1} \subseteq \mathbb{N}_k$ tal que $(f_n(x_{k+1}))_{n \in \mathbb{N}_{k+1}}$ converge.
+\end{itemize}
+
+Temos a seguinte estrutura (processo diagonal):
+Seja $f_{k, i}$ o $i$-ésimo termo da subsequência $\mathbb{N}_k$. Então temos:
+
+\begin{align*}
+    \mathbb{N}_1 &: f_{1,1}, f_{1,2}, f_{1,3}, \dots \quad (\text{converge em } x_1) \\
+    \mathbb{N}_2 &: f_{2,1}, f_{2,2}, f_{2,3}, \dots \quad (\text{converge em } x_1, x_2) \\
+    \mathbb{N}_3 &: f_{3,1}, f_{3,2}, f_{3,3}, \dots \quad (\text{converge em } x_1, x_2, x_3) \\
+    &\vdots
+\end{align*}
+
+Tomamos a diagonal $g_n = f_{n,n}$.
+A sequência $(g_n)$ é, a menos de um número finito de termos, uma subsequência de $\mathbb{N}_k$ para qualquer $k$. Portanto, $(g_n(x_k))$ converge para todo $k$.
+Como $x_k$ varre todo $E$, a sequência diagonal converge em todo $E$.
+%% TODO fix the wording here
+
+Nessa nova linguagem, temos o seguinte enunciado do Teorema de Arzela-Ascoli:
+
+\begin{teoremabox}{Teorema 46 (Arzela-Ascoli)}
+Se $K$ é compacto e $\{f_n\}$ é uma sequência de funções pontualmente limitada e equicontínua, então:
+\begin{enumerate}
+    \item $\{f_n\}$ é uniformemente limitada.
+    \item $\{f_n\}$ possui subsequência uniformemente convergente.
+\end{enumerate}
+\end{teoremabox}
+
+\begin{proof}
+
+I) $\{f_n\}$ é uniformemente limitada.
+
+Como $\{f_n\}$ é equicontínua, dado $\epsilon=1$, escolha $\delta(1)$ como um número tal que $|x-y|<\delta(1) \implies |f_n(x)-f_n(y)| < 1$, para todo $x,y \in K$ e $n \in \mathbb{N}$.
+
+Seja $\varphi: K \rightarrow \mathbb{R}_{\ge 0}$ uma cota superior pontual de $\{f_n\}$.
+
+Como $U=\{B_{\delta(1)}(x) : x \in K\}$ é uma cobertura de $K$ por abertos, existe uma subcobertura finita $V = \{B_{\delta(1)}(x_1), \dots, B_{\delta(1)}(x_k)\}$. Observe que se $y \in B_{\delta(1)}(x_i)$, então para todo $n \in \mathbb{N}$:
+\[ |f_n(y)| \le |f_n(y) - f_n(x_i)| + |f_n(x_i)| < 1 + \varphi(x_i) \]
+
+Ponha $M = \max_{1 \le i \le k} [1 + \varphi(x_i)]$.
+
+Então para todo $x \in K$ e $n \in \mathbb{N}$, existe um $i$ tal que $x \in B_{\delta(1)}(x_i)$ (pois essas bolas formam uma cobertura finita) e logo
+\[ |f_n(x)| < 1 + \varphi(x_i) \le M \]
+Logo $\{f_n\}$ é uniformemente limitada, como queríamos demonstrar. Note que a escolha de 1, em vez de qualquer número positivo, foi arbitrária.
+
+II) $\{f_n\}$ possui subsequência uniformemente convergente.
+
+Como $K$ é compacto, existe $E \subseteq K$ enumerável e denso. Pelo critério de seleção do Teorema 47, como a sequência de funções é pontualmente limitada, existe uma subsequência $(f_{n_k})$ convergente em $E$. Vamos mostrar que ela é uniformemente convergente em $K$. Denote $g_k := f_{n_k}$.
+
+Fixe $\epsilon > 0$. Como $\{g_k\}$ é equicontínua (pois é subsequência de equicontínua), existe $\delta(\epsilon/3) > 0$ tal que $|x-y|<\delta \implies |g_k(x)-g_k(y)| < \epsilon/3$.
+
+Como $K$ é compacto, a cobertura $U=\{B_{\delta(\epsilon/3)}(x) : x \in K\}$ possui subcobertura finita $V = \{B_{\delta(\epsilon/3)}(x_1), \dots, B_{\delta(\epsilon/3)}(x_p)\}$.
+
+Para mostrar que $(g_k)$ é uniformemente convergente, utilizaremos o critério de Cauchy.
+
+Observemos que, como $E$ é denso, existe $e_i \in E \cap B_{\delta(\epsilon/3)}(x_i)$.
+
+Como $(g_k)$ converge em $E$, existe $N_i \in \mathbb{N}$ tal que, para todos $m, n \ge N_i$, $|g_n(e_i) - g_m(e_i)| < \epsilon/3$.
+
+Seja $N = \max(N_1, \dots, N_p)$.
+
+Assim, para todo $x \in K$ e $m, n \ge N$, existe $i$ tal que $x \in B_{\delta(\epsilon/3)}(x_i)$. Então:
+\begin{align*}
+|g_n(x) - g_m(x)| &\le |g_n(x) - g_n(e_i)| + |g_n(e_i) - g_m(e_i)| + |g_m(e_i) - g_m(x)| \\
+&< \frac{\epsilon}{3} + \frac{\epsilon}{3} + \frac{\epsilon}{3} = \epsilon
+\end{align*}
+(Note que $|x-e_i|$ é pequeno o suficiente pela desigualdade triangular na bola, garantindo a aplicação da equicontinuidade).
+
+Logo $(g_k)$ converge uniformemente.
+
+\end{proof}
+
+%% TODO this seem to diverge related to original notes
